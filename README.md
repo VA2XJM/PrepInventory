@@ -7,8 +7,10 @@ PrepInventory is the re-make of a personal project that aim to manage home inven
 * Multi-Location: Manage your inventory for home, garage, storage, cabin or wherever else you can store something in one place.
 
 ## Copyrights
+##### PrepInventory
 Jean-Michel Vien (xJMV) (2015)
 
 ##### Web GUI
-> Start Bootstrap - Admin 2
-> Copyright to Iron Summit Media Strategies, LLC
+Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+
+Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
