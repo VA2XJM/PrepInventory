@@ -91,7 +91,7 @@
 				</li>
 				<!-- /.dropdown -->
 				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<!-- fa-bell-o: No notifications -=- fa-bell: new notification -->
 						<i class="fa fa-bell-o fa-fw"></i>  <i class="fa fa-caret-down"></i>
 					</a>
