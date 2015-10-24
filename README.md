@@ -5,3 +5,10 @@ PrepInventory is the re-make of a personal project that aim to manage home inven
 * Web-based: Once installed, you can use it on your favorite device.
 * Multi-User: Allows family members, friends or group members to access the system.
 * Multi-Location: Manage your inventory for home, garage, storage, cabin or wherever else you can store something in one place.
+
+## Copyrights
+Jean-Michel Vien (xJMV) (2015)
+
+##### Web GUI
+> Start Bootstrap - Admin 2
+> Copyright to Iron Summit Media Strategies, LLC
