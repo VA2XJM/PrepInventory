@@ -18,3 +18,5 @@ Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework 
 Font Awesome by Dave Gandy - http://fontawesome.io
 
 All icon images by Icons8 - https://icons8.com
+
+Image-picker by Maj-X - https://github.com/Maj-X/image-picker
