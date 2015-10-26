@@ -1,0 +1,13 @@
+/*!
+ * PrepInventory - https://github.com/xJMV/PrepInventory
+ */
+
+.pi-list-unstyled {
+	list-style: none;
+}
+
+.icon {
+	display: inline;
+	height: 24px;
+	width: 24px;
+}

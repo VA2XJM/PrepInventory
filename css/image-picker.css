@@ -1,0 +1,27 @@
+.image-picker-element {
+	position: relative;
+}
+
+.image-picker-element .image-picker-box {
+	display: inline-block;
+	cursor: pointer;
+}
+
+.image-picker-element .image-picker-box img {
+	border-radius: 5px;
+	vertical-align: top;
+}
+
+.image-picker-element .image-picker-selector {
+	margin-top: 0;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	position: absolute;
+	top: 0px;
+	display: none;
+	cursor: pointer;
+}
+
+.image-picker-element .image-picker-selector img {
+	vertical-align: top;
+}
