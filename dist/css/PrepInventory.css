@@ -3,5 +3,11 @@
  */
 
 .pi-list-unstyled {
-  list-style: none;
+	list-style: none;
+}
+
+.icon {
+	display: inline;
+	height: 24px;
+	width: 24px;
 }

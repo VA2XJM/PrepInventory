@@ -72,39 +72,36 @@
 				<div class="col-lg-12">
 					<!-- CODE -->
 
-					<!-- ### Link to add a new location. -->
-					<!-- ### Table showing locations organized by location. -->
-					<!-- ### (icon) (Location: 0.0) (Name) (Description) (Action(s)) -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							Locations listing.
 						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-						<a href="management_locations_add.php" title="Add new location" alt="Add new location">Add a new location</a>
+						<a href="management_locations_add.php?parent=0" title="Add new root location" alt="Add new root location">Add a new root location</a>
 						<hr>
 							<?php
 								$sql = "SELECT * FROM `inv_locations_1` ORDER BY `name` ASC";
 								$result = mysqli_query($link, $sql);
-								if (mysqli_num_rows($result) < 1) { print "No locations has been configured yet."; }
+								if (mysqli_num_rows($result) < 1) { print "No root locations has been configured yet."; }
 								else {
 									while($row = mysqli_fetch_assoc($result)) {
-										print '<i class="fa '. $row['icon'] .' fa-fw"></i> <a href="managment_locations_edit.php?id=1-'. $row['id'] .'" title="' . $row['description'] . '">' . $row["name"] . '</a><br>';
+										print '<img src="'. $row['icon'] .'" class="icon"> ' . $row["name"] . ' <a href="management_locations_add.php?parent=1-'. $row['id'] .'" title="Add child location" alt="Add child location"><i class="fa fa-plus-square fa-fw"></i></a> <a href="management_locations_edit.php?id=1-'. $row['id'] .'"><i class="fa fa-pencil-square fa-fw"></i></a><br>';
 										$sql2 = "SELECT * FROM `inv_locations_2` WHERE parent = '". $row['id'] ."' ORDER BY `name` ASC";
 										$result2 = mysqli_query($link, $sql2);
 										if (mysqli_num_rows($result2) > 0) {
 											while($row2 = mysqli_fetch_assoc($result2)) {
-												print '&emsp; <i class="fa '. $row2['icon'] .' fa-fw"></i> <a href="managment_locations_edit.php?id=2-'. $row2['id'] .'" title="' . $row2['description'] . '">' . $row2["name"] . '</a><br>';
+												print '&emsp; <img src="'. $row2['icon'] .'" class="icon"> ' . $row2["name"] . ' <a href="management_locations_add.php?parent=2-'. $row2['id'] .'" title="Add child location" alt="Add child location"><i class="fa fa-plus-square fa-fw"></i></a> <a href="management_locations_edit.php?id=2-'. $row2['id'] .'"><i class="fa fa-pencil-square fa-fw"></i></a><br>';
 												$sql3 = "SELECT * FROM `inv_locations_3` WHERE parent = '". $row2['id'] ."' ORDER BY `name` ASC";
 												$result3 = mysqli_query($link, $sql3);
 												if (mysqli_num_rows($result3) > 0) {
 													while($row3 = mysqli_fetch_assoc($result3)) {
-														print '&emsp;&emsp; <i class="fa '. $row3['icon'] .' fa-fw"></i> <a href="managment_locations_edit.php?id=3-'. $row3['id'] .'" title="' . $row3['description'] . '">' . $row3["name"] . '</a><br>';
+														print '&emsp;&emsp; <img src="'. $row3['icon'] .'" class="icon"> ' . $row3["name"] . ' <a href="management_locations_add.php?parent=3-'. $row3['id'] .'" title="Add child location" alt="Add child location"><i class="fa fa-plus-square fa-fw"></i></a> <a href="management_locations_edit.php?id=3-'. $row3['id'] .'"><i class="fa fa-pencil-square fa-fw"></i></a><br>';
 														$sql4 = "SELECT * FROM `inv_locations_4` WHERE parent = '". $row3['id'] ."' ORDER BY `name` ASC";
 														$result4 = mysqli_query($link, $sql4);
 														if (mysqli_num_rows($result4) > 0) {
 															while($row4 = mysqli_fetch_assoc($result4)) {
-																print '&emsp;&emsp;&emsp; <i class="fa '. $row4['icon'] .' fa-fw"></i> <a href="managment_locations_edit.php?id=4-'. $row4['id'] .'" title="' . $row4['description'] . '">' . $row4["name"] . '</a><br>';
+																print '&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' <a href="management_locations_edit.php?id=4-'. $row4['id'] .'"><i class="fa fa-pencil-square fa-fw"></i></a><br>';
 															}
 														}
 													}
