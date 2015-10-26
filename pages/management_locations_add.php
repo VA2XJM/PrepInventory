@@ -44,7 +44,7 @@
 			$result = mysqli_query($link, $sql);
 			if ($result) {
 				$panel_type = 'panel-success';
-				$panel_notice = "Location has been added.";
+				$panel_notice = "Location has been added. <a href=\"management_locations.php\" title=\"Return\" alt=\"Return\">Return to Locations</a>";
 			}
 			else {
 				$panel_type = 'panel-danger';
@@ -176,7 +176,7 @@
 							<button type="submit" class="btn btn-default">Submit</button>
 						</form>
 					</div>
-
+					</div>
 					<!-- /CODE -->
 				</div>
 				<!-- /.col-lg-12 -->

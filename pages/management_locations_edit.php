@@ -75,7 +75,7 @@
 						$result = mysqli_query($link, $sql);
 						if ($result) {
 							$panel_type = 'panel-success';
-							$panel_notice = "Location has been Changed.";
+							$panel_notice = "Location has been Changed. <a href=\"management_locations.php\" title=\"Return\" alt=\"Return\">Return to Locations</a>";
 						}
 						else {
 							$panel_type = 'panel-danger';
@@ -207,10 +207,10 @@
 									<?PHP getDirectory( "../icons/locations" ); ?>
 								</select>
 							</div>
-							<button type="submit" class="btn btn-default">Submit</button>
+							<button type="submit" class="btn btn-default">Submit</button> &emsp; <small><a href="management_locations_delete.php?id=<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>">Delete</a></small>
 						</form>
 					</div>
-
+					</div>
 					<!-- /CODE -->
 				</div>
 				<!-- /.col-lg-12 -->
