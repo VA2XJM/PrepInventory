@@ -52,12 +52,12 @@
 			$result = mysqli_query($link, $sql);
 			if (mysqli_num_rows($result) > 0) { 
 				while($row = mysqli_fetch_assoc($result)) {
-					$sql2 = "DELETE FROM `inv_locations_2` WHERE `parent`='". $row['parent'] ."'";
+					$sql2 = "DELETE FROM `inv_categories_2` WHERE `parent`='". $row['parent'] ."'";
 					$result2 = mysqli_query($link, $sql2);
 				}
 			}
 			
-			$panel_type = 'panel-success'; $panel_notice = "Location deleted.<br><a href=\"management_locations.php\" title=\"Return\" alt=\"Return\">Return to Locations</a>";
+			$panel_type = 'panel-success'; $panel_notice = "Location deleted.<br><a href=\"management_categories.php\" title=\"Return\" alt=\"Return\">Return to categories</a>";
 		}
 	}
 ?>

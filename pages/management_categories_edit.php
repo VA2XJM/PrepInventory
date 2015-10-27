@@ -17,10 +17,8 @@
 		$id_id = explode("-", $_GET['id'])[1];
 		
 		if (is_numeric($id_lev) && is_numeric($id_id)) {
-			if ($id_lev == '1') { $table = 'inv_locations_1'; }
-			elseif ($id_lev == '2') { $table = 'inv_locations_2'; }
-			elseif ($id_lev == '3') { $table = 'inv_locations_3'; }
-			elseif ($id_lev == '4') { $table = 'inv_locations_4'; }
+			if ($id_lev == '1') { $table = 'inv_categories_1'; }
+			elseif ($id_lev == '2') { $table = 'inv_categories_2'; }
 			
 			$sql = "SELECT * FROM `$table` WHERE `id`='$id_id'";
 			$result = mysqli_query($link, $sql);
@@ -205,7 +203,7 @@
 									<?PHP getDirectory( "../icons" ); ?>
 								</select>
 							</div>
-							<button type="submit" class="btn btn-default">Submit</button> &emsp; <small><a href="management_locations_delete.php?id=<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>">Delete</a></small>
+							<button type="submit" class="btn btn-default">Submit</button> &emsp; <small><a href="management_categories_delete.php?id=<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>">Delete</a></small>
 						</form>
 					</div>
 					</div>
