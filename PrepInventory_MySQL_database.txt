@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 25, 2015 at 12:53 AM
+-- Generation Time: Oct 27, 2015 at 09:21 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.4.41
 
@@ -17,14 +17,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inv_categories`
+-- Table structure for table `inv_categories_1`
 --
 
-CREATE TABLE IF NOT EXISTS `inv_categories` (
+CREATE TABLE IF NOT EXISTS `inv_categories_1` (
   `id` int(16) NOT NULL,
+  `parent` int(16) DEFAULT NULL,
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
-  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o'
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_categories_2`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_categories_2` (
+  `id` int(16) NOT NULL,
+  `parent` int(16) DEFAULT NULL,
+  `name` text COLLATE utf8_bin NOT NULL,
+  `description` text COLLATE utf8_bin NOT NULL,
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -49,9 +64,10 @@ CREATE TABLE IF NOT EXISTS `inv_items` (
 
 CREATE TABLE IF NOT EXISTS `inv_locations_1` (
   `id` int(16) NOT NULL,
+  `parent` int(16) DEFAULT NULL,
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
-  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o'
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -65,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `inv_locations_2` (
   `parent` int(16) DEFAULT NULL,
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
-  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o'
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -79,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `inv_locations_3` (
   `parent` int(16) DEFAULT NULL,
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
-  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o'
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -93,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `inv_locations_4` (
   `parent` int(16) DEFAULT NULL,
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
-  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-cube'
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -101,9 +117,15 @@ CREATE TABLE IF NOT EXISTS `inv_locations_4` (
 --
 
 --
--- Indexes for table `inv_categories`
+-- Indexes for table `inv_categories_1`
 --
-ALTER TABLE `inv_categories`
+ALTER TABLE `inv_categories_1`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inv_categories_2`
+--
+ALTER TABLE `inv_categories_2`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -141,9 +163,14 @@ ALTER TABLE `inv_locations_4`
 --
 
 --
--- AUTO_INCREMENT for table `inv_categories`
+-- AUTO_INCREMENT for table `inv_categories_1`
 --
-ALTER TABLE `inv_categories`
+ALTER TABLE `inv_categories_1`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `inv_categories_2`
+--
+ALTER TABLE `inv_categories_2`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `inv_items`
