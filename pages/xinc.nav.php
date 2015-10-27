@@ -196,9 +196,6 @@
 								<li>
 									<a href="inventory_shopping.php">Shopping List</a>
 								</li>
-								<li>
-									<a href="inventory_management.php">Manage Inventory</a>
-								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
