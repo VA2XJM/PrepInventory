@@ -10,45 +10,77 @@
 		die();
 	}
 	
-	# Submission
 	$panel_type = 'panel-default';
-	# Is name empty? if not proceed, otherwise show red panel.
-	if (empty($_POST['name']) && empty($_POST['icon'])) { $panel_type = 'panel-default'; }
-	elseif (!empty($_POST['icon']) && empty($_POST['name'])) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: Name is mandatory."; }
-	else {
-		# if name is set and match 'A-Z, a-z, 0-9, - and space' proceed. Otherwise show red panel.
-		if (!preg_match('!^[\w -]*$!', $_POST['name'])) { 
-			$panel_type = 'panel-danger';
-			$panel_notice = "Error: Name contain illegal character(s).";
-		}
-		else {
-			# Check for parent level and ID. Check sanity.
-			if ($_GET['parent'] == '0') { $_GET['parent'] = '0-0'; }
-			$parent_lev = explode("-", $_GET['parent'])[0];
-			$parent_id = explode("-", $_GET['parent'])[1];
-
-			if ($parent_lev == '0') { $table = 'inv_locations_1'; $parent_id = '0'; }
-			elseif ($parent_lev == '1') { $table = 'inv_locations_2'; }
-			elseif ($parent_lev == '2') { $table = 'inv_locations_3'; }
-			elseif ($parent_lev == '3') { $table = 'inv_locations_4'; }
-			else { $table = 'inv_locations_1'; }
+	# Loading existing data
+	if (!empty($_GET['id'])) {
+		$id_lev = explode("-", $_GET['id'])[0];
+		$id_id = explode("-", $_GET['id'])[1];
+		
+		if (is_numeric($id_lev) && is_numeric($id_id)) {
+			if ($id_lev == '1') { $table = 'inv_locations_1'; }
+			elseif ($id_lev == '2') { $table = 'inv_locations_2'; }
+			elseif ($id_lev == '3') { $table = 'inv_locations_3'; }
+			elseif ($id_lev == '4') { $table = 'inv_locations_4'; }
 			
-			$name = $_POST['name'];
-			$icon = $_POST['icon'];
-			if (!empty($_POST['description'])) { $desc = $_POST['description']; }
-			else { $desc = ''; }
-			
-			# Execute MySQL. If there is not error show green panel and notification.
-			# Else show red panel and error notification.
-			$sql = "INSERT INTO `$table` (`parent`, `name`, `description`, `icon`) VALUES ('$parent_id', '$name', '$desc', '$icon')";
+			$sql = "SELECT * FROM `$table` WHERE `id`='$id_id'";
 			$result = mysqli_query($link, $sql);
-			if ($result) {
-				$panel_type = 'panel-success';
-				$panel_notice = "Location has been added. <a href=\"management_locations.php\" title=\"Return\" alt=\"Return\">Return to Locations</a>";
+			if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+			else {
+				while($row = mysqli_fetch_assoc($result)) {
+					$name = $row['name'];
+					$desc = $row['description'];
+					$icon = $row['icon'];
+				}
+			}
+		}
+		else { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+	}
+
+	# Submission
+	# Is name empty? if not proceed, otherwise show red panel.
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if (empty($_POST['name']) && empty($_POST['icon'])) { $panel_type = 'panel-default'; }
+		elseif (!empty($_POST['icon']) && empty($_POST['name'])) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: Name is mandatory."; }
+		else {
+			# if name is set and match 'A-Z, a-z, 0-9, - and space' proceed. Otherwise show red panel.
+			if (!preg_match('!^[\w -]*$!', $_POST['name'])) { 
+				$panel_type = 'panel-danger';
+				$panel_notice = "Error: Name contain illegal character(s).";
 			}
 			else {
-				$panel_type = 'panel-danger';
-				$panel_notice = "Error: Can't add location to database.";
+				# Check for id level and ID. Check sanity.
+				$id_lev = explode("-", $_REQUEST['id'])[0];
+				$id_id = explode("-", $_REQUEST['id'])[1];
+
+				if (is_numeric($id_lev) && is_numeric($id_id)) {
+					if ($id_lev == '1') { $table = 'inv_categories_1'; }
+					elseif ($id_lev == '2') { $table = 'inv_categories_2'; }
+					else { $table = 'inv_categories_1'; }
+					
+					# Check if ID exists. If not, show error
+					$sql = "SELECT * FROM `$table` WHERE `id`='$id_id'";
+					$result = mysqli_query($link, $sql);
+					if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+					else {
+						$name = $_POST['name'];
+						$icon = $_POST['icon'];
+						if (!empty($_POST['description'])) { $desc = $_POST['description']; }
+						else { $desc = ''; }
+						
+						# Execute MySQL. If there is not error show green panel and notification.
+						# Else show red panel and error notification.
+						$sql = "UPDATE `$table` SET `name`='$name', `description`='$desc', `icon`='$icon' WHERE `id`='$id_id'";
+						$result = mysqli_query($link, $sql);
+						if ($result) {
+							$panel_type = 'panel-success';
+							$panel_notice = "Category has been Changed. <a href=\"management_categories.php\" title=\"Return\" alt=\"Return\">Return to categories</a>";
+						}
+						else {
+							$panel_type = 'panel-danger';
+							$panel_notice = "Error: Can't change category.";
+						}
+					}
+				}
 			}
 		}
 	}
@@ -141,7 +173,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Management - Locations - Add</h1>
+					<h1 class="page-header">Management - Categories - Edit</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -152,28 +184,28 @@
 					
 					<div class="panel <?PHP print $panel_type; ?>">
 					<div class="panel-heading">
-						Add a new location
+						Edit location
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post">
 							<?PHP if (!empty($panel_notice)) { print "<div>$panel_notice</div><br>"; } ?>
 							<div class="form-group">
-								<input class="form-control" placeholder="Name" name="name">
+								<input class="form-control" placeholder="Name" name="name" value="<?PHP if (!empty($name)) { print $name; } ?>">
 								<p class="help-block">Name is mandatory. A-Z, a-z, 0-9, - and space.</p>
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Description" name="description">
+								<input class="form-control" placeholder="Description" name="description" value="<?PHP if (!empty($desc)) { print $desc; } ?>">
 							</div>
 							<div class="form-group">
-								<input class="form-control" type="hidden" placeholder="" name="parent" value="<?PHP if (!empty($_GET['parent'])) { print $_GET['parent']; } elseif (!empty($_POST['parent'])) { print $_POST['parent']; } else { print '0'; } ?>" disabled>
+								<input class="form-control" type="hidden" placeholder="" name="id" value="<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>" disabled>
 							</div>
 							<div class="form-group">	
 								<select class="image-picker" id="image-picker" name="icon">
-									<option data-img-src="../icons/default-48.png" value="../icons/default-48.png">../icons/default-48.png</option>
+									<?PHP if (!empty($icon)) { print '<option data-img-src="'. $icon .'" value="'. $icon .'">'.$icon.'</option>'; } ?>
 									<?PHP getDirectory( "../icons" ); ?>
 								</select>
 							</div>
-							<button type="submit" class="btn btn-default">Submit</button>
+							<button type="submit" class="btn btn-default">Submit</button> &emsp; <small><a href="management_locations_delete.php?id=<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>">Delete</a></small>
 						</form>
 					</div>
 					</div>

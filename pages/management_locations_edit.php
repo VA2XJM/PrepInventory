@@ -204,7 +204,7 @@
 							<div class="form-group">	
 								<select class="image-picker" id="image-picker" name="icon">
 									<?PHP if (!empty($icon)) { print '<option data-img-src="'. $icon .'" value="'. $icon .'">'.$icon.'</option>'; } ?>
-									<?PHP getDirectory( "../icons/locations" ); ?>
+									<?PHP getDirectory( "../icons" ); ?>
 								</select>
 							</div>
 							<button type="submit" class="btn btn-default">Submit</button> &emsp; <small><a href="management_locations_delete.php?id=<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>">Delete</a></small>
