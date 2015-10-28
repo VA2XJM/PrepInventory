@@ -10,54 +10,58 @@
 		die();
 	}
 	
-	$panel_type = 'panel-red';
+	$panel_type = 'panel-default';
 	# Loading existing data
 	if (!empty($_GET['id'])) {
-		$id_lev = explode("-", $_GET['id'])[0];
-		$id_id = explode("-", $_GET['id'])[1];
+		$id_id = $_GET['id'];
 		
-		if (is_numeric($id_lev) && is_numeric($id_id)) {
-			if ($id_lev == '1') { $table = 'inv_categories_1'; }
-			elseif ($id_lev == '2') { $table = 'inv_categories_2'; }
-			else { $table = 'inv_categories_1'; }
-			
-			$sql = "SELECT * FROM `$table` WHERE `id`='$id_id'";
-			$result = mysqli_query($link, $sql);
-			if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
-			else {
-				while($row = mysqli_fetch_assoc($result)) {
-					$name = $row['name'];
-					$desc = $row['description'];
-					$icon = $row['icon'];
-				}
+		$sql = "SELECT * FROM `inv_units` WHERE `id`='$id_id'";
+		$result = mysqli_query($link, $sql);
+		if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+		else {
+			while($row = mysqli_fetch_assoc($result)) {
+				$name = $row['name'];
 			}
 		}
-		else { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
 	}
 
-	# Delete
-	if (!empty($_GET['action']) && $_GET['action'] == 'delete') {
-		$id_lev = explode("-", $_GET['id'])[0];
-		$id_id = explode("-", $_GET['id'])[1];
-		
-		if (is_numeric($id_lev) && is_numeric($id_id)) {
-			if ($id_lev == '1') { $table = 'inv_categories_1'; }
-			elseif ($id_lev == '2') { $table = 'inv_categories_2'; }
-			else { $table = 'inv_categories_1'; }
-			
-			$sql = "DELETE FROM `$table` WHERE `id`='$id_id'";
-			$result = mysqli_query($link, $sql);
-			
-			$sql = "SELECT `parent` FROM `inv_categories_2` WHERE `parent` NOT IN (SELECT `id` FROM `inv_categories_1`)";
-			$result = mysqli_query($link, $sql);
-			if (mysqli_num_rows($result) > 0) { 
-				while($row = mysqli_fetch_assoc($result)) {
-					$sql2 = "DELETE FROM `inv_categories_2` WHERE `parent`='". $row['parent'] ."'";
-					$result2 = mysqli_query($link, $sql2);
+	# Submission
+	# Is name empty? if not proceed, otherwise show red panel.
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if (empty($_POST['name'])) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: Name is mandatory."; }
+		else {
+			# if name is set and match 'A-Z, a-z, 0-9, - and space' proceed. Otherwise show red panel.
+			if (!preg_match('!^[\w -]*$!', $_POST['name'])) { 
+				$panel_type = 'panel-danger';
+				$panel_notice = "Error: Name contain illegal character(s).";
+			}
+			else {
+				# Check for id level and ID. Check sanity.
+				$id_id = $_REQUEST['id'];
+
+				if (is_numeric($id_id)) {
+					# Check if ID exists. If not, show error
+					$sql = "SELECT * FROM `inv_units` WHERE `id`='$id_id'";
+					$result = mysqli_query($link, $sql);
+					if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+					else {
+						$name = $_POST['name'];
+						
+						# Execute MySQL. If there is not error show green panel and notification.
+						# Else show red panel and error notification.
+						$sql = "UPDATE `inv_units` SET `name`='$name' WHERE `id`='$id_id'";
+						$result = mysqli_query($link, $sql);
+						if ($result) {
+							$panel_type = 'panel-success';
+							$panel_notice = "Unit has been Changed. <a href=\"management_units.php\" title=\"Return\" alt=\"Return\">Return to Units</a>";
+						}
+						else {
+							$panel_type = 'panel-danger';
+							$panel_notice = "Error: Can't change unit.";
+						}
+					}
 				}
 			}
-			
-			$panel_type = 'panel-success'; $panel_notice = "Location deleted.<br><a href=\"management_categories.php\" title=\"Return\" alt=\"Return\">Return to categories</a>";
 		}
 	}
 ?>
@@ -114,34 +118,35 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Management - Categories - Delete</h1>
+					<h1 class="page-header">Management - Units - Edit</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
 			<div class="row">
-				<div class="col-lg-4"></div>
-				<div class="col-lg-4">
+				<div class="col-lg-12">
 					<!-- CODE -->
 					
 					<div class="panel <?PHP print $panel_type; ?>">
 					<div class="panel-heading">
-						Delete location
+						Edit unit
 					</div>
 					<div class="panel-body">
-						<?PHP if (!empty($panel_notice)) { print "<div>$panel_notice</div><br>"; } else { ?>
-						<div align="center"> Are you sure you want to delete this category? </div>
-						<?PHP if (!empty($icon)) { print '<img src="'. $icon .'" style="float: left;">'; } ?>
-						<div style="padding: 5px;">
-							<?PHP if (!empty($name)) { print "&emsp;<b>$name</b><br>&emsp;$desc<br>"; } ?>
-						</div>
-						<div align="center"><a href="management_categories_delete.php?id=<?PHP print $_REQUEST['id']; ?>&action=delete">Delete</a> &emsp; <a href="management_categories.php" title="Cancel" alt="Cancel">Cancel</a></div>
-						<?PHP } ?>
+						<form role="form" method="post">
+							<?PHP if (!empty($panel_notice)) { print "<div>$panel_notice</div><br>"; } ?>
+							<div class="form-group">
+								<input class="form-control" placeholder="Name" name="name" value="<?PHP if (!empty($name)) { print $name; } ?>">
+								<p class="help-block">Name is mandatory. A-Z, a-z, 0-9, - and space.</p>
+							</div>
+							<div class="form-group">
+								<input class="form-control" type="hidden" placeholder="" name="id" value="<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>" disabled>
+							</div>
+							<button type="submit" class="btn btn-default">Submit</button> &emsp; <small><a href="management_units_delete.php?id=<?PHP if (!empty($_REQUEST['id'])) { print $_REQUEST['id']; } ?>">Delete</a></small>
+						</form>
 					</div>
 					</div>
 					<!-- /CODE -->
 				</div>
-				<div class="col-lg-4"></div>
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
@@ -163,7 +168,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="../dist/js/sb-admin-2.js"></script>
 	
-	<!-- FA IconPicker -->
+	<!-- FA IconPicker --> <!--
 	<script type="text/javascript" src="../js/image-picker.js" ></script>
 	<script type="text/javascript" >
 		$('.image-picker').imagePicker({
@@ -172,7 +177,7 @@
 			imageMaxHeight: 100,
 			imageMaxWidth: 48
 		});
-	</script>
+	</script> -->
 </body>
 
 </html>

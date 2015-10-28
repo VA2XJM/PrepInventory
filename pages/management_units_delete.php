@@ -13,51 +13,27 @@
 	$panel_type = 'panel-red';
 	# Loading existing data
 	if (!empty($_GET['id'])) {
-		$id_lev = explode("-", $_GET['id'])[0];
-		$id_id = explode("-", $_GET['id'])[1];
+		$id_id = $_GET['id'];
 		
-		if (is_numeric($id_lev) && is_numeric($id_id)) {
-			if ($id_lev == '1') { $table = 'inv_categories_1'; }
-			elseif ($id_lev == '2') { $table = 'inv_categories_2'; }
-			else { $table = 'inv_categories_1'; }
-			
-			$sql = "SELECT * FROM `$table` WHERE `id`='$id_id'";
-			$result = mysqli_query($link, $sql);
-			if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
-			else {
-				while($row = mysqli_fetch_assoc($result)) {
-					$name = $row['name'];
-					$desc = $row['description'];
-					$icon = $row['icon'];
-				}
+		$sql = "SELECT * FROM `inv_units` WHERE `id`='$id_id'";
+		$result = mysqli_query($link, $sql);
+		if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+		else {
+			while($row = mysqli_fetch_assoc($result)) {
+				$name = $row['name'];
 			}
 		}
-		else { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
 	}
 
 	# Delete
 	if (!empty($_GET['action']) && $_GET['action'] == 'delete') {
-		$id_lev = explode("-", $_GET['id'])[0];
-		$id_id = explode("-", $_GET['id'])[1];
+		$id_id = $_GET['id'];
 		
-		if (is_numeric($id_lev) && is_numeric($id_id)) {
-			if ($id_lev == '1') { $table = 'inv_categories_1'; }
-			elseif ($id_lev == '2') { $table = 'inv_categories_2'; }
-			else { $table = 'inv_categories_1'; }
-			
-			$sql = "DELETE FROM `$table` WHERE `id`='$id_id'";
+		if (is_numeric($id_id)) {
+			$sql = "DELETE FROM `inv_units` WHERE `id`='$id_id'";
 			$result = mysqli_query($link, $sql);
 			
-			$sql = "SELECT `parent` FROM `inv_categories_2` WHERE `parent` NOT IN (SELECT `id` FROM `inv_categories_1`)";
-			$result = mysqli_query($link, $sql);
-			if (mysqli_num_rows($result) > 0) { 
-				while($row = mysqli_fetch_assoc($result)) {
-					$sql2 = "DELETE FROM `inv_categories_2` WHERE `parent`='". $row['parent'] ."'";
-					$result2 = mysqli_query($link, $sql2);
-				}
-			}
-			
-			$panel_type = 'panel-success'; $panel_notice = "Location deleted.<br><a href=\"management_categories.php\" title=\"Return\" alt=\"Return\">Return to categories</a>";
+			$panel_type = 'panel-success'; $panel_notice = "Unit deleted.<br><a href=\"management_units.php\" title=\"Return\" alt=\"Return\">Return to Units</a>";
 		}
 	}
 ?>
@@ -114,7 +90,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Management - Categories - Delete</h1>
+					<h1 class="page-header">Management - Units - Delete</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -126,16 +102,15 @@
 					
 					<div class="panel <?PHP print $panel_type; ?>">
 					<div class="panel-heading">
-						Delete location
+						Delete unit
 					</div>
 					<div class="panel-body">
 						<?PHP if (!empty($panel_notice)) { print "<div>$panel_notice</div><br>"; } else { ?>
-						<div align="center"> Are you sure you want to delete this category? </div>
-						<?PHP if (!empty($icon)) { print '<img src="'. $icon .'" style="float: left;">'; } ?>
+						<div align="center"> Are you sure you want to delete this unit? </div>
 						<div style="padding: 5px;">
-							<?PHP if (!empty($name)) { print "&emsp;<b>$name</b><br>&emsp;$desc<br>"; } ?>
+							<?PHP if (!empty($name)) { print "&emsp;<b>$name</b><br>"; } ?>
 						</div>
-						<div align="center"><a href="management_categories_delete.php?id=<?PHP print $_REQUEST['id']; ?>&action=delete">Delete</a> &emsp; <a href="management_categories.php" title="Cancel" alt="Cancel">Cancel</a></div>
+						<div align="center"><a href="management_units_delete.php?id=<?PHP print $_REQUEST['id']; ?>&action=delete">Delete</a> &emsp; <a href="management_units.php" title="Cancel" alt="Cancel">Cancel</a></div>
 						<?PHP } ?>
 					</div>
 					</div>
@@ -163,7 +138,7 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="../dist/js/sb-admin-2.js"></script>
 	
-	<!-- FA IconPicker -->
+	<!-- FA IconPicker --> <!--
 	<script type="text/javascript" src="../js/image-picker.js" ></script>
 	<script type="text/javascript" >
 		$('.image-picker').imagePicker({
@@ -172,7 +147,7 @@
 			imageMaxHeight: 100,
 			imageMaxWidth: 48
 		});
-	</script>
+	</script> -->
 </body>
 
 </html>
