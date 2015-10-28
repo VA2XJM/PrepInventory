@@ -155,7 +155,7 @@
 						<div align="center"> Are you sure you want to delete this location? </div>
 						<?PHP if (!empty($icon)) { print '<img src="'. $icon .'" style="float: left;">'; } ?>
 						<div style="padding: 5px;">
-							<?PHP if (!empty($name) && !empty($desc)) { print "&emsp;<b>$name</b><br>&emsp;$desc<br>"; } ?>
+							<?PHP if (!empty($name)) { print "&emsp;<b>$name</b><br>&emsp;$desc<br>"; } ?>
 						</div>
 						<div align="center"><a href="management_locations_delete.php?id=<?PHP print $_REQUEST['id']; ?>&action=delete">Delete</a> &emsp; <a href="management_locations.php" title="Cancel" alt="Cancel">Cancel</a></div>
 						<?PHP } ?>
