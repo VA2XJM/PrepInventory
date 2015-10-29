@@ -1,18 +1,42 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.9
+-- version 4.4.13.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 27, 2015 at 09:21 PM
+-- Generation Time: Oct 29, 2015 at 09:06 PM
 -- Server version: 5.6.25
--- PHP Version: 5.4.41
+-- PHP Version: 5.5.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Database: `prepinv`
 --
+CREATE DATABASE IF NOT EXISTS `prepinv` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `prepinv`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory`
+--
+
+CREATE TABLE IF NOT EXISTS `inventory` (
+  `id` int(16) NOT NULL,
+  `item` int(16) NOT NULL,
+  `category` varchar(16) NOT NULL,
+  `location` varchar(16) NOT NULL,
+  `unit` int(16) NOT NULL,
+  `qty` decimal(16,0) NOT NULL DEFAULT '0',
+  `qty_max` decimal(16,0) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -53,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `inv_items` (
   `parent` int(16) NOT NULL DEFAULT '0',
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
+  `keywords` text COLLATE utf8_bin NOT NULL,
   `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -112,9 +137,26 @@ CREATE TABLE IF NOT EXISTS `inv_locations_4` (
   `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '../icons/default-48.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_units`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_units` (
+  `id` int(16) NOT NULL,
+  `name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `inv_categories_1`
@@ -159,9 +201,20 @@ ALTER TABLE `inv_locations_4`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `inv_units`
+--
+ALTER TABLE `inv_units`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `inv_categories_1`
 --
@@ -197,3 +250,11 @@ ALTER TABLE `inv_locations_3`
 --
 ALTER TABLE `inv_locations_4`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `inv_units`
+--
+ALTER TABLE `inv_units`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
