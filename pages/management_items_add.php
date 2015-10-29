@@ -31,7 +31,7 @@
 			
 			# Execute MySQL. If there is not error show green panel and notification.
 			# Else show red panel and error notification.
-			$sql = "INSERT INTO `inv_items` (`name`, `description`, `icon`, `cat`, `unit`) VALUES ('$name', '$desc', '$icon', '$category', '$unit')";
+			$sql = "INSERT INTO `inv_items` (`name`, `description`, `keywords`, `icon`, `cat`, `unit`) VALUES ('$name', '$desc', '', '$icon', '$category', '$unit')";
 			$result = mysqli_query($link, $sql);
 			if ($result) {
 				$panel_type = 'panel-success';
