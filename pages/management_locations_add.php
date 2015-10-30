@@ -170,7 +170,7 @@
 							<div class="form-group">	
 								<select class="image-picker" id="image-picker" name="icon">
 									<option data-img-src="../icons/default-48.png" value="../icons/default-48.png">../icons/default-48.png</option>
-									<?PHP getDirectory( "../icons/locations" ); ?>
+									<?PHP getDirectory( "../icons" ); ?>
 								</select>
 							</div>
 							<button type="submit" class="btn btn-default">Submit</button>

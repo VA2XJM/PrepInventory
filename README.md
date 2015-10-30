@@ -8,10 +8,10 @@ PrepInventory is the re-make of a personal project that aim to manage home inven
 
 ## Copyrights
 ##### PrepInventory
-Jean-Michel Vien (xJMV) (2015)
+Jean-Michel Vien (xJMV - 2015) <jmv@jmvien.net>
 
 ##### Web GUI
-Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+Start Bootstrap was created by and is maintained by **David Miller**, Managing Partner at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
 
 Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
 
