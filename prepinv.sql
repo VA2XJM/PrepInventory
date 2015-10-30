@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2015 at 09:06 PM
+-- Generation Time: Oct 30, 2015 at 02:00 AM
 -- Server version: 5.6.25
 -- PHP Version: 5.5.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `prepinv`
@@ -31,9 +25,7 @@ USE `prepinv`;
 CREATE TABLE IF NOT EXISTS `inventory` (
   `id` int(16) NOT NULL,
   `item` int(16) NOT NULL,
-  `category` varchar(16) NOT NULL,
   `location` varchar(16) NOT NULL,
-  `unit` int(16) NOT NULL,
   `qty` decimal(16,0) NOT NULL DEFAULT '0',
   `qty_max` decimal(16,0) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -74,11 +66,12 @@ CREATE TABLE IF NOT EXISTS `inv_categories_2` (
 
 CREATE TABLE IF NOT EXISTS `inv_items` (
   `id` int(16) NOT NULL,
-  `parent` int(16) NOT NULL DEFAULT '0',
   `name` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
   `keywords` text COLLATE utf8_bin NOT NULL,
-  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o'
+  `icon` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT 'fa-square-o',
+  `cat` varchar(16) COLLATE utf8_bin NOT NULL,
+  `unit` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -255,6 +248,3 @@ ALTER TABLE `inv_locations_4`
 --
 ALTER TABLE `inv_units`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
