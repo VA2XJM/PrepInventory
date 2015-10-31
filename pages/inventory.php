@@ -104,17 +104,54 @@
 															while($row4 = mysqli_fetch_assoc($result4)) {
 																# Level 4 locations
 																print '&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' <br>';
+																# Items for fourth level
+																$loc = '4-'. $row4['id'];
+																$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+																$resultx = mysqli_query($link, $sqlx);
+																if (mysqli_num_rows($resultx) > 0) {
+																	while($rowx = mysqli_fetch_assoc($resultx)) {
+																		print '&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+																	}
+																}
+																# /Items			
 															}
-															### Items for fourth level
 														}
+														# Items for third level
+														$loc = '3-'. $row3['id'];
+														$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+														$resultx = mysqli_query($link, $sqlx);
+														if (mysqli_num_rows($resultx) > 0) {
+															while($rowx = mysqli_fetch_assoc($resultx)) {
+																print '&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+															}
+														}
+														# /Items
 													}
-													### Items for third level
 												}
+												# Items for second level
+												$loc = '2-'. $row2['id'];
+												$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+												$resultx = mysqli_query($link, $sqlx);
+												if (mysqli_num_rows($resultx) > 0) {
+													while($rowx = mysqli_fetch_assoc($resultx)) {
+														print '&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+													}
+												}
+												# /Items
 											}
-											### Items for second level
 										}
+										# Items for first level
+										$loc = '1-'. $row['id'];
+										$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+										$resultx = mysqli_query($link, $sqlx);
+										if (mysqli_num_rows($resultx) > 0) {
+											while($rowx = mysqli_fetch_assoc($resultx)) {
+												print '&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+											}
+										}
+										# /Items
+										print '<br>';
 									}
-									### Items for first level
 								}
 							?>
 						</div>
