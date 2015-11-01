@@ -174,6 +174,9 @@
 								</form>
 							</div>
 						</div>
+						<div class="panel-footer" align="center">
+							<a href="inventory_edit.php?id=<?PHP print $get_id; ?>">Edit this item</a> - <a href="inventory_delete.php?id=<?PHP print $get_id; ?>">Delete this item</a>
+						</div>
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->
