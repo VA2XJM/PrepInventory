@@ -119,7 +119,8 @@
 																					elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
 																					elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 																					elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
-																					else { $pclevel = 'progress-bar-success'; }
+																					elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
+																					else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
 																					print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																				}
 																			}
@@ -138,7 +139,8 @@
 																			elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
 																			elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 																			elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
-																			else { $pclevel = 'progress-bar-success'; }
+																			elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
+																			else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
 																			print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																		}
 																	}
@@ -157,7 +159,8 @@
 																	elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
 																	elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 																	elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
-																	else { $pclevel = 'progress-bar-success'; }
+																	elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
+																	else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
 																	print '<tr><td>&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																}
 															}
@@ -176,7 +179,8 @@
 															elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
 															elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 															elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
-															else { $pclevel = 'progress-bar-success'; }
+															elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
+															else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
 															print '<tr><td>&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 														}
 													}
