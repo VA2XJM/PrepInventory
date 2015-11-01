@@ -23,34 +23,34 @@
 							$result = mysqli_query($link, $sql);
 							if (mysqli_num_rows($result) > 0) {
 								while($row = mysqli_fetch_assoc($result)) {
-									$inv_id = $row['id'];
-									$inv_item = $row['item'];
-									$inv_location = $row['location'];
-									$inv_qty = $row['qty'];
-									$inv_qtymax = $row['qty_max'];
-									$inv_percent = $inv_qty / $inv_qtymax * 100;
+									$nav_inv_id = $row['id'];
+									$nav_inv_item = $row['item'];
+									$nav_inv_location = $row['location'];
+									$nav_inv_qty = $row['qty'];
+									$nav_inv_qtymax = $row['qty_max'];
+									$nav_inv_percent = $nav_inv_qty / $nav_inv_qtymax * 100;
 									# Load more details
-									$sqlz = "SELECT * FROM `inv_items` WHERE `id` = '$inv_item'";
+									$sqlz = "SELECT * FROM `inv_items` WHERE `id` = '$nav_inv_item'";
 									$resultz = mysqli_query($link, $sqlz);
 									if (mysqli_num_rows($resultz) > 0) {
 										while($rowz = mysqli_fetch_assoc($resultz)) {
-											$item_name = $rowz['name'];
-											$item_desc = $rowz['description'];
-											$item_keywords = $rowz['keywords'];
-											$item_icon = $rowz['icon'];
-											$item_cat = $rowz['cat'];
-											$item_unit = $rowz['unit'];
+											$nav_item_name = $rowz['name'];
+											$nav_item_desc = $rowz['description'];
+											$nav_item_keywords = $rowz['keywords'];
+											$nav_item_icon = $rowz['icon'];
+											$nav_item_cat = $rowz['cat'];
+											$nav_item_unit = $rowz['unit'];
 											
-											$pcact = '';
-											if ($inv_percent < '1') { $pclevel = 'progress-bar-danger'; $pcact = ' progress-striped active'; }
-											elseif ($inv_percent < '30') { $pclevel = 'progress-bar-danger'; }
-											elseif ($inv_percent < '60') { $pclevel = 'progress-bar-warning'; }
-											elseif ($inv_percent < '90') { $pclevel = 'progress-bar-info'; }
-											elseif ($inv_percent < '101') { $pclevel = 'progress-bar-success'; }
-											else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
-											print '<li><a href="inventory_details.php?id='. $inv_id .'"><div><p><strong>'. $item_name .'</strong><span class="pull-right text-muted">Stock Level: '. floor($inv_percent) .'%</span>';
-											if ($inv_percent < '1') { $inv_percent = '100'; }
-											print '	<div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $inv_percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $inv_percent .'%"></div></div></div></a></li><li class="divider"></li>';
+											$nav_pcact = '';
+											if ($nav_inv_percent < '1') { $nav_pclevel = 'progress-bar-danger'; $nav_pcact = ' progress-striped active'; }
+											elseif ($nav_inv_percent < '30') { $nav_pclevel = 'progress-bar-danger'; }
+											elseif ($nav_inv_percent < '60') { $nav_pclevel = 'progress-bar-warning'; }
+											elseif ($nav_inv_percent < '90') { $nav_pclevel = 'progress-bar-info'; }
+											elseif ($nav_inv_percent < '101') { $nav_pclevel = 'progress-bar-success'; }
+											else { $nav_pclevel = 'progress-bar-success'; $nav_pcact = ' progress-striped active'; }
+											print '<li><a href="inventory_details.php?id='. $nav_inv_id .'"><div><p><strong>'. $nav_item_name .'</strong><span class="pull-right text-muted">Stock Level: '. floor($nav_inv_percent) .'%</span>';
+											if ($nav_inv_percent < '1') { $nav_inv_percent = '100'; }
+											print '	<div class="progress'. $nav_pcact .'"><div class="progress-bar '. $nav_pclevel .'" role="progressbar" aria-valuenow="'. $nav_inv_percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $nav_inv_percent .'%"></div></div></div></a></li><li class="divider"></li>';
 										}
 									}
 								}
