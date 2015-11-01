@@ -109,7 +109,7 @@
 																			print '<tr><td>&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' </td><td></td></tr>';
 																			# Items for fourth level
 																			$loc = '4-'. $row4['id'];
-																			$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+																			$sqlx = "SELECT *, t1.id AS `invid` FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
 																			$resultx = mysqli_query($link, $sqlx);
 																			if (mysqli_num_rows($resultx) > 0) {
 																				while($rowx = mysqli_fetch_assoc($resultx)) {
@@ -120,7 +120,7 @@
 																					elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 																					elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 																					else { $pclevel = 'progress-bar-success'; }
-																					print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																					print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																				}
 																			}
 																			# /Items			
@@ -128,7 +128,7 @@
 																	}
 																	# Items for third level
 																	$loc = '3-'. $row3['id'];
-																	$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+																	$sqlx = "SELECT *, t1.id AS `invid` FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
 																	$resultx = mysqli_query($link, $sqlx);
 																	if (mysqli_num_rows($resultx) > 0) {
 																		while($rowx = mysqli_fetch_assoc($resultx)) {
@@ -139,7 +139,7 @@
 																			elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 																			elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 																			else { $pclevel = 'progress-bar-success'; }
-																			print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																			print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																		}
 																	}
 																	# /Items
@@ -147,7 +147,7 @@
 															}
 															# Items for second level
 															$loc = '2-'. $row2['id'];
-															$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+															$sqlx = "SELECT *, t1.id AS `invid` FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
 															$resultx = mysqli_query($link, $sqlx);
 															if (mysqli_num_rows($resultx) > 0) {
 																while($rowx = mysqli_fetch_assoc($resultx)) {
@@ -158,7 +158,7 @@
 																	elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 																	elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 																	else { $pclevel = 'progress-bar-success'; }
-																	print '<tr><td>&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																	print '<tr><td>&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																}
 															}
 															# /Items
@@ -166,7 +166,7 @@
 													}
 													# Items for first level
 													$loc = '1-'. $row['id'];
-													$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+													$sqlx = "SELECT *, t1.id AS `invid` FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
 													$resultx = mysqli_query($link, $sqlx);
 													if (mysqli_num_rows($resultx) > 0) {
 														while($rowx = mysqli_fetch_assoc($resultx)) {
@@ -177,7 +177,7 @@
 															elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
 															elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 															else { $pclevel = 'progress-bar-success'; }
-															print '<tr><td>&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+															print '<tr><td>&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 														}
 													}
 													# /Items
