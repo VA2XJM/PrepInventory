@@ -78,82 +78,116 @@
 						</div>
 						<!-- /.panel-heading -->
 						<div class="panel-body">
-							<?php ### Edit links below
-								$sql = "SELECT * FROM `inv_locations_1` ORDER BY `name` ASC";
-								$result = mysqli_query($link, $sql);
-								if (mysqli_num_rows($result) < 1) { print "No locations has been configured yet."; }
-								else {
-									while($row = mysqli_fetch_assoc($result)) {
-										# Level 1 locations
-										print '<img src="'. $row['icon'] .'" class="icon"> ' . $row["name"] . ' <br>';
-										$sql2 = "SELECT * FROM `inv_locations_2` WHERE parent = '". $row['id'] ."' ORDER BY `name` ASC";
-										$result2 = mysqli_query($link, $sql2);
-										if (mysqli_num_rows($result2) > 0) {
-											while($row2 = mysqli_fetch_assoc($result2)) {
-												# Level 2 locations
-												print '&emsp; <img src="'. $row2['icon'] .'" class="icon"> ' . $row2["name"] . ' <br>';
-												$sql3 = "SELECT * FROM `inv_locations_3` WHERE parent = '". $row2['id'] ."' ORDER BY `name` ASC";
-												$result3 = mysqli_query($link, $sql3);
-												if (mysqli_num_rows($result3) > 0) {
-													while($row3 = mysqli_fetch_assoc($result3)) {
-														# Level 3 locations
-														print '&emsp;&emsp; <img src="'. $row3['icon'] .'" class="icon"> ' . $row3["name"] . ' <br>';
-														$sql4 = "SELECT * FROM `inv_locations_4` WHERE parent = '". $row3['id'] ."' ORDER BY `name` ASC";
-														$result4 = mysqli_query($link, $sql4);
-														if (mysqli_num_rows($result4) > 0) {
-															while($row4 = mysqli_fetch_assoc($result4)) {
-																# Level 4 locations
-																print '&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' <br>';
-																# Items for fourth level
-																$loc = '4-'. $row4['id'];
-																$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
-																$resultx = mysqli_query($link, $sqlx);
-																if (mysqli_num_rows($resultx) > 0) {
-																	while($rowx = mysqli_fetch_assoc($resultx)) {
-																		print '&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<tbody>
+										<?php 
+											$sql = "SELECT * FROM `inv_locations_1` ORDER BY `name` ASC";
+											$result = mysqli_query($link, $sql);
+											if (mysqli_num_rows($result) < 1) { print "No locations has been configured yet."; }
+											else {
+												while($row = mysqli_fetch_assoc($result)) {
+													# Level 1 locations
+													print '<tr><td><img src="'. $row['icon'] .'" class="icon"> ' . $row["name"] . ' </td><td style="width:200px;"></td></tr>';
+													$sql2 = "SELECT * FROM `inv_locations_2` WHERE parent = '". $row['id'] ."' ORDER BY `name` ASC";
+													$result2 = mysqli_query($link, $sql2);
+													if (mysqli_num_rows($result2) > 0) {
+														while($row2 = mysqli_fetch_assoc($result2)) {
+															# Level 2 locations
+															print '<tr><td>&emsp; <img src="'. $row2['icon'] .'" class="icon"> ' . $row2["name"] . ' </td><td></td></tr>';
+															$sql3 = "SELECT * FROM `inv_locations_3` WHERE parent = '". $row2['id'] ."' ORDER BY `name` ASC";
+															$result3 = mysqli_query($link, $sql3);
+															if (mysqli_num_rows($result3) > 0) {
+																while($row3 = mysqli_fetch_assoc($result3)) {
+																	# Level 3 locations
+																	print '<tr><td>&emsp;&emsp; <img src="'. $row3['icon'] .'" class="icon"> ' . $row3["name"] . ' </td><td></td></tr>';
+																	$sql4 = "SELECT * FROM `inv_locations_4` WHERE parent = '". $row3['id'] ."' ORDER BY `name` ASC";
+																	$result4 = mysqli_query($link, $sql4);
+																	if (mysqli_num_rows($result4) > 0) {
+																		while($row4 = mysqli_fetch_assoc($result4)) {
+																			# Level 4 locations
+																			print '<tr><td>&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' </td><td></td></tr>';
+																			# Items for fourth level
+																			$loc = '4-'. $row4['id'];
+																			$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+																			$resultx = mysqli_query($link, $sqlx);
+																			if (mysqli_num_rows($resultx) > 0) {
+																				while($rowx = mysqli_fetch_assoc($resultx)) {
+																					$pcact = '';
+																					$percent = $rowx['qty'] / $rowx['qty_max'] * 100;
+																					if ($percent < '1') { $pclevel = 'progress-bar-danger'; $pcact = ' progress-striped active'; $percent = '100'; }
+																					elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
+																					elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
+																					elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
+																					else { $pclevel = 'progress-bar-success'; }
+																					print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																				}
+																			}
+																			# /Items			
+																		}
 																	}
+																	# Items for third level
+																	$loc = '3-'. $row3['id'];
+																	$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+																	$resultx = mysqli_query($link, $sqlx);
+																	if (mysqli_num_rows($resultx) > 0) {
+																		while($rowx = mysqli_fetch_assoc($resultx)) {
+																			$pcact = '';
+																			$percent = $rowx['qty'] / $rowx['qty_max'] * 100;
+																			if ($percent < '1') { $pclevel = 'progress-bar-danger'; $pcact = ' progress-striped active'; $percent = '100'; }
+																			elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
+																			elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
+																			elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
+																			else { $pclevel = 'progress-bar-success'; }
+																			print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																		}
+																	}
+																	# /Items
 																}
-																# /Items			
 															}
-														}
-														# Items for third level
-														$loc = '3-'. $row3['id'];
-														$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
-														$resultx = mysqli_query($link, $sqlx);
-														if (mysqli_num_rows($resultx) > 0) {
-															while($rowx = mysqli_fetch_assoc($resultx)) {
-																print '&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+															# Items for second level
+															$loc = '2-'. $row2['id'];
+															$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+															$resultx = mysqli_query($link, $sqlx);
+															if (mysqli_num_rows($resultx) > 0) {
+																while($rowx = mysqli_fetch_assoc($resultx)) {
+																	$pcact = '';
+																	$percent = $rowx['qty'] / $rowx['qty_max'] * 100;
+																	if ($percent < '1') { $pclevel = 'progress-bar-danger'; $pcact = ' progress-striped active'; $percent = '100'; }
+																	elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
+																	elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
+																	elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
+																	else { $pclevel = 'progress-bar-success'; }
+																	print '<tr><td>&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																}
 															}
+															# /Items
 														}
-														# /Items
 													}
-												}
-												# Items for second level
-												$loc = '2-'. $row2['id'];
-												$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
-												$resultx = mysqli_query($link, $sqlx);
-												if (mysqli_num_rows($resultx) > 0) {
-													while($rowx = mysqli_fetch_assoc($resultx)) {
-														print '&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
+													# Items for first level
+													$loc = '1-'. $row['id'];
+													$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
+													$resultx = mysqli_query($link, $sqlx);
+													if (mysqli_num_rows($resultx) > 0) {
+														while($rowx = mysqli_fetch_assoc($resultx)) {
+															$pcact = '';
+															$percent = $rowx['qty'] / $rowx['qty_max'] * 100;
+															if ($percent < '1') { $pclevel = 'progress-bar-danger'; $pcact = ' progress-striped active'; $percent = '100'; }
+															elseif ($percent < '30') { $pclevel = 'progress-bar-danger'; }
+															elseif ($percent < '60') { $pclevel = 'progress-bar-warning'; }
+															elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
+															else { $pclevel = 'progress-bar-success'; }
+															print '<tr><td>&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' </td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+														}
 													}
+													# /Items
+													print '<tr><td></td><td></td></tr>';
 												}
-												# /Items
 											}
-										}
-										# Items for first level
-										$loc = '1-'. $row['id'];
-										$sqlx = "SELECT * FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
-										$resultx = mysqli_query($link, $sqlx);
-										if (mysqli_num_rows($resultx) > 0) {
-											while($rowx = mysqli_fetch_assoc($resultx)) {
-												print '&emsp; <img src="'. $rowx['icon'] .'" class="icon"> ' . $rowx["name"] . ' <br>';
-											}
-										}
-										# /Items
-										print '<br>';
-									}
-								}
-							?>
+										?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<!-- /.panel-body -->
 					</div>
