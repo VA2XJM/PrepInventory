@@ -177,7 +177,7 @@
 					
 					<div class="panel <?PHP print $panel_type; ?>">
 					<div class="panel-heading">
-						Edit location
+						Edit Item
 					</div>
 					<div class="panel-body">
 						<form role="form" method="post">
