@@ -26,12 +26,11 @@
 			$item = $_POST['item'];
 			$location = $_POST['location'];
 			if (empty($_POST['qty'])) { $_POST['qty'] = 0; }
-			$qty = $_POST['qty'];
 			$qtymax = $_POST['qty-max'];
 			
 			# Execute MySQL. If there is not error show green panel and notification.
 			# Else show red panel and error notification.
-			$sql = "UPDATE `inventory` SET `item`='$item', `location`='$location', `qty`='$qty', `qty_max`='$qtymax' WHERE id=$id";
+			$sql = "UPDATE `inventory` SET `item`='$item', `location`='$location', `qty_max`='$qtymax' WHERE id=$id";
 			$result = mysqli_query($link, $sql);
 			if ($result) {
 				$panel_type = 'panel-success';
@@ -195,7 +194,7 @@
 								</div>
 								<div class="form-inline">
 									<label>Quantity available &emsp;&emsp;&emsp;&nbsp;  Quantity maximum</label><br>
-									<input class="form-control" placeholder="0" name="qty" value="<?PHP print $dqty; ?>"> &nbsp; <input class="form-control" placeholder="1" value="<?PHP print $dqtymax; ?>" name="qty-max">
+									<input class="form-control" placeholder="0" name="qty" value="<?PHP print $dqty; ?>" disabled> &nbsp; <input class="form-control" placeholder="1" value="<?PHP print $dqtymax; ?>" name="qty-max">
 								</div>
 								<button type="submit" class="btn btn-default">Submit</button>
 							</form>
