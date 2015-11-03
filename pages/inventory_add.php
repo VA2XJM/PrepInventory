@@ -33,8 +33,14 @@
 			$sql = "INSERT INTO `inventory` (`item`, `location`, `qty`, `qty_max`) VALUES ('$item', '$location', '$qty', '$qtymax')";
 			$result = mysqli_query($link, $sql);
 			if ($result) {
+				# Display green panel to user
 				$panel_type = 'panel-success';
 				$panel_notice = "Item has been added to inventory. <a href=\"inventory.php\" title=\"Return\" alt=\"Return\">Return to Inventory</a>";
+
+				# Add a line to the inventory log
+				$username = $_SESSION['username'];
+				$sql = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`) VALUES ('$item', '+', '$qty', '$username')";
+				$result = mysqli_query($link, $sql);
 			}
 			else {
 				$panel_type = 'panel-danger';

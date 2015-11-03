@@ -22,14 +22,34 @@
 		else {
 			while($row = mysqli_fetch_assoc($result)) {
 				$t_qty = $row['qty'];
+				$t_item = $row['item'];
 			}
+			
+			# Set qty to 0 if nothing submited.
 			if (empty($_POST['qty'])) { $_POST['qty'] = '0'; }
 			
-			if (isset( $_POST['more'])) { $t_new = $t_qty + $_POST['qty']; }
-			elseif (isset( $_POST['less'])) { $t_new = $t_qty - $_POST['qty']; if ($t_new < '1') { $t_new = '0'; } }
-			else { $t_new = $t_qty; }
+			# If we add more:
+			if (isset( $_POST['more'])) { 
+				$t_new = $t_qty + $_POST['qty']; 
+				$inv_act = '+';  $inv_qty = $_POST['qty'];
+			}
+			
+			# If we get some out
+			elseif (isset( $_POST['less'])) { 
+				$t_new = $t_qty - $_POST['qty'];
+				$inv_act = '-'; $inv_qty = $_POST['qty'];
+				if ($t_new < '1') { $t_new = '0'; $inv_qty = $t_qty; } 
+			}
+			
+			# Else remain to equity.
+			else { $t_new = $t_qty; $inv_act = '='; }
 			
 			$sql = "UPDATE `inventory` SET `qty`='$t_new' WHERE `id`='$get_id'";
+			$result = mysqli_query($link, $sql);
+			
+			# Add a line to the inventory log
+			$username = $_SESSION['username'];
+			$sql = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`) VALUES ('$t_item', '$inv_act', '$inv_qty', '$username')";
 			$result = mysqli_query($link, $sql);
 		}
 	}

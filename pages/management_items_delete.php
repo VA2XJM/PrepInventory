@@ -34,6 +34,14 @@
 		if (is_numeric($id_id)) {
 			$sql = "DELETE FROM `inv_items` WHERE `id`='$id_id'";
 			$result = mysqli_query($link, $sql);
+
+			# Delete all lines from the inventory
+			$sql = "DELETE FROM `inventory` WHERE `item`='$id_id'";
+			$result = mysqli_query($link, $sql);
+
+			# Delete all lines from the inventory log
+			$sql = "DELETE FROM `inv_log` WHERE `item`='$id_id'";
+			$result = mysqli_query($link, $sql);
 			
 			$panel_type = 'panel-success'; $panel_notice = "Item deleted.<br><a href=\"management_items.php\" title=\"Return\" alt=\"Return\">Return to Items</a>";
 		}
