@@ -15,71 +15,48 @@
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
 					</a>
+
 					<ul class="dropdown-menu dropdown-tasks">
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Item 4</strong>
-										<span class="pull-right text-muted">Stock Level: 30%</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
-											<span class="sr-only">30% stock level (danger)</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Item 3</strong>
-										<span class="pull-right text-muted">Stock Level: 60%</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-											<span class="sr-only">60% stock level (warning)</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Item 2</strong>
-										<span class="pull-right text-muted">Stock Level: 90%</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-											<span class="sr-only">90% stock level</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<p>
-										<strong>Item 1</strong>
-										<span class="pull-right text-muted">Stock Level: 100%</span>
-									</p>
-									<div class="progress progress-striped active">
-										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-											<span class="sr-only">100% stock level (success)</span>
-										</div>
-									</div>
-								</div>
-							</a>
-						</li>
-						<li class="divider"></li>
+						<?PHP
+							# Load item details
+							$sql = "SELECT * FROM `inventory` ORDER BY (qty/qty_max) ASC LIMIT 5";
+							$result = mysqli_query($link, $sql);
+							if (mysqli_num_rows($result) > 0) {
+								while($row = mysqli_fetch_assoc($result)) {
+									$nav_inv_id = $row['id'];
+									$nav_inv_item = $row['item'];
+									$nav_inv_location = $row['location'];
+									$nav_inv_qty = $row['qty'];
+									$nav_inv_qtymax = $row['qty_max'];
+									$nav_inv_percent = $nav_inv_qty / $nav_inv_qtymax * 100;
+									# Load more details
+									$sqlz = "SELECT * FROM `inv_items` WHERE `id` = '$nav_inv_item'";
+									$resultz = mysqli_query($link, $sqlz);
+									if (mysqli_num_rows($resultz) > 0) {
+										while($rowz = mysqli_fetch_assoc($resultz)) {
+											$nav_item_name = $rowz['name'];
+											$nav_item_desc = $rowz['description'];
+											$nav_item_keywords = $rowz['keywords'];
+											$nav_item_icon = $rowz['icon'];
+											$nav_item_cat = $rowz['cat'];
+											$nav_item_unit = $rowz['unit'];
+											
+											$nav_pcact = '';
+											if ($nav_inv_percent < '1') { $nav_pclevel = 'progress-bar-danger'; $nav_pcact = ' progress-striped active'; }
+											elseif ($nav_inv_percent < '30') { $nav_pclevel = 'progress-bar-danger'; }
+											elseif ($nav_inv_percent < '60') { $nav_pclevel = 'progress-bar-warning'; }
+											elseif ($nav_inv_percent < '90') { $nav_pclevel = 'progress-bar-info'; }
+											elseif ($nav_inv_percent < '101') { $nav_pclevel = 'progress-bar-success'; }
+											else { $nav_pclevel = 'progress-bar-success'; $nav_pcact = ' progress-striped active'; }
+											print '<li><a href="inventory_details.php?id='. $nav_inv_id .'"><div><p><strong>'. $nav_item_name .'</strong><span class="pull-right text-muted">Stock Level: '. floor($nav_inv_percent) .'%</span>';
+											if ($nav_inv_percent < '1') { $nav_inv_percent = '100'; }
+											print '	<div class="progress'. $nav_pcact .'"><div class="progress-bar '. $nav_pclevel .'" role="progressbar" aria-valuenow="'. $nav_inv_percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $nav_inv_percent .'%"></div></div></div></a></li><li class="divider"></li>';
+										}
+									}
+								}
+							}
+						?>
+
 						<li>
 							<a class="text-center" href="inventory.php">
 								<strong>See All Items</strong>
@@ -195,6 +172,9 @@
 								</li>
 								<li>
 									<a href="inventory_shopping.php">Shopping List</a>
+								</li>
+								<li>
+									<a href="inventory_add.php">Add item in inventory</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->

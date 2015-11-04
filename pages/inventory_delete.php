@@ -15,14 +15,38 @@
 	if (!empty($_GET['id'])) {
 		$id_id = $_GET['id'];
 		
-		$sql = "SELECT * FROM `inv_items` WHERE `id`='$id_id'";
+		$sql = "SELECT * FROM `inventory` WHERE `id`='$id_id'";
 		$result = mysqli_query($link, $sql);
 		if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
 		else {
 			while($row = mysqli_fetch_assoc($result)) {
-				$name = $row['name'];
-				$desc = $row['description'];
-				$icon = $row['icon'];
+				$ditem = $row['item'];
+				$dlocation = $row['location'];
+			}
+			$sql = "SELECT * FROM `inv_items` WHERE `id`='$ditem'";
+			$result = mysqli_query($link, $sql);
+			if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+			else {
+				while($row = mysqli_fetch_assoc($result)) {
+					$dname = $row['name'];
+					$ddesc = $row['description'];
+					$dicon = $row['icon'];
+				}
+			}
+			
+			$loc_lev = explode("-", $dlocation)[0];
+			$loc_id = explode("-", $dlocation)[1];
+			if ($loc_lev == '1') { $table = 'inv_locations_1'; }
+			elseif ($loc_lev == '2') { $table = 'inv_locations_2'; }
+			elseif ($loc_lev == '3') { $table = 'inv_locations_3'; }
+			elseif ($loc_lev == '4') { $table = 'inv_locations_4'; }
+			$sql = "SELECT * FROM `$table` WHERE `id`='$loc_id'";
+			$result = mysqli_query($link, $sql);
+			if (mysqli_num_rows($result) < 1) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: wrong ID."; }
+			else {
+				while($row = mysqli_fetch_assoc($result)) {
+					$dlname = $row['name'];
+				}
 			}
 		}
 	}
@@ -32,18 +56,10 @@
 		$id_id = $_GET['id'];
 		
 		if (is_numeric($id_id)) {
-			$sql = "DELETE FROM `inv_items` WHERE `id`='$id_id'";
-			$result = mysqli_query($link, $sql);
-
-			# Delete all lines from the inventory
-			$sql = "DELETE FROM `inventory` WHERE `item`='$id_id'";
-			$result = mysqli_query($link, $sql);
-
-			# Delete all lines from the inventory log
-			$sql = "DELETE FROM `inv_log` WHERE `item`='$id_id'";
+			$sql = "DELETE FROM `inventory` WHERE `id`='$id_id'";
 			$result = mysqli_query($link, $sql);
 			
-			$panel_type = 'panel-success'; $panel_notice = "Item deleted.<br><a href=\"management_items.php\" title=\"Return\" alt=\"Return\">Return to Items</a>";
+			$panel_type = 'panel-success'; $panel_notice = "Item deleted.<br><a href=\"inventory.php\" title=\"Return\" alt=\"Return\">Return to Inventory</a>";
 		}
 	}
 ?>
@@ -100,7 +116,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Management - Items - Delete</h1>
+					<h1 class="page-header">Management - Inventory - Delete</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -117,11 +133,12 @@
 					<div class="panel-body">
 						<?PHP if (!empty($panel_notice)) { print "<div>$panel_notice</div><br>"; } else { ?>
 						<div align="center"> Are you sure you want to delete this item? </div>
-						<?PHP if (!empty($icon)) { print '<img src="'. $icon .'" style="float: left;">'; } ?>
+						<?PHP if (!empty($dicon)) { print '<img src="'. $dicon .'" style="float: left;">'; } ?>
 						<div style="padding: 5px;">
-							<?PHP if (!empty($name)) { print "&emsp;<b>$name</b><br>&emsp;$desc<br>"; } ?>
+							<?PHP if (!empty($dname)) { print "&emsp;<b>$dname</b><br>&emsp;$ddesc<br>"; } ?>
+							&emsp; from <strong><?PHP print $dlname; ?></strong>
 						</div>
-						<div align="center"><a href="management_items_delete.php?id=<?PHP print $_REQUEST['id']; ?>&action=delete">Delete</a> &emsp; <a href="management_items.php" title="Cancel" alt="Cancel">Cancel</a></div>
+						<div align="center"><a href="inventory_delete.php?id=<?PHP print $_REQUEST['id']; ?>&action=delete">Delete</a> &emsp; <a href="inventory.php" title="Cancel" alt="Cancel">Cancel</a></div>
 						<?PHP } ?>
 					</div>
 					</div>
