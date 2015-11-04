@@ -155,7 +155,8 @@
 																					### Item location tree
 																					$t_loc_lev = explode("-", $t_itm_loc)[0];
 																					$t_loc_id = explode("-", $t_itm_loc)[1];
-																					$t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';  
+																					$t_loc_id4 = ''; $t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';
+																					$t_loc_name4 = ''; $t_loc_name3 = ''; $t_loc_name2 = ''; $t_loc_name1 = '';  
 																					
 																					# Get location lvl 4
 																					if ($t_loc_lev == '4') {
@@ -269,7 +270,8 @@
 																			### item location tree
 																			$t_loc_lev = explode("-", $t_itm_loc)[0];
 																			$t_loc_id = explode("-", $t_itm_loc)[1];
-																			$t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';  
+																			$t_loc_id4 = ''; $t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';
+																			$t_loc_name4 = ''; $t_loc_name3 = ''; $t_loc_name2 = ''; $t_loc_name1 = ''; 
 																			
 																			# Get location lvl 4
 																			if ($t_loc_lev == '4') {
@@ -373,7 +375,8 @@
 																	# Get location tree
 																	$t_loc_lev = explode("-", $t_loc)[0];
 																	$t_loc_id = explode("-", $t_loc)[1];
-																	$t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';  
+																	$t_loc_id4 = ''; $t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';
+																	$t_loc_name4 = ''; $t_loc_name3 = ''; $t_loc_name2 = ''; $t_loc_name1 = '';  
 																	
 																	# Get location lvl 4
 																	if ($t_loc_lev == '4') {
