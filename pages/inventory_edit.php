@@ -17,7 +17,7 @@
 	elseif (!empty($_POST['item']) && empty($_POST['qty-max'])) { $panel_type = 'panel-danger'; $panel_notice = "ERROR: Quantities are mandatory."; }
 	else {
 		# if name is set and match 'A-Z, a-z, 0-9, - and space' proceed. Otherwise show red panel.
-		if (!is_numeric($_POST['qty']) || !is_numeric($_POST['qty-max'])) { 
+		if (!is_numeric($_POST['qty-max'])) { 
 			$panel_type = 'panel-danger';
 			$panel_notice = "Error: Quantitites must be numerical.";
 		}
@@ -25,7 +25,6 @@
 			$id = $_REQUEST['id'];
 			$item = $_POST['item'];
 			$location = $_POST['location'];
-			if (empty($_POST['qty'])) { $_POST['qty'] = 0; }
 			$qtymax = $_POST['qty-max'];
 			
 			# Execute MySQL. If there is not error show green panel and notification.
