@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 30, 2015 at 02:00 AM
--- Server version: 5.6.25
+-- Generation Time: Nov 04, 2015 at 12:58 AM
+-- Server version: 5.6.26
 -- PHP Version: 5.5.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `id` int(16) NOT NULL,
   `item` int(16) NOT NULL,
   `location` varchar(16) NOT NULL,
-  `qty` decimal(16,0) NOT NULL DEFAULT '0',
-  `qty_max` decimal(16,0) NOT NULL DEFAULT '0'
+  `qty` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `qty_max` decimal(16,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -133,6 +133,21 @@ CREATE TABLE IF NOT EXISTS `inv_locations_4` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `inv_log`
+--
+
+CREATE TABLE IF NOT EXISTS `inv_log` (
+  `id` int(32) NOT NULL,
+  `item` int(16) NOT NULL,
+  `action` varchar(8) NOT NULL DEFAULT '=',
+  `qty` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `user` varchar(64) NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `inv_units`
 --
 
@@ -194,6 +209,12 @@ ALTER TABLE `inv_locations_4`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `inv_log`
+--
+ALTER TABLE `inv_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `inv_units`
 --
 ALTER TABLE `inv_units`
@@ -243,6 +264,11 @@ ALTER TABLE `inv_locations_3`
 --
 ALTER TABLE `inv_locations_4`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `inv_log`
+--
+ALTER TABLE `inv_log`
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `inv_units`
 --
