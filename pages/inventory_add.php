@@ -174,7 +174,7 @@
 								</div>
 								<div class="form-inline">
 									<label>Quantity available &emsp;&emsp;&emsp;&nbsp;  Quantity maximum</label><br>
-									<input class="form-control" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" placeholder="1" value="1" name="qty-max">
+									<input class="form-control" type="number" autocomplete="off" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="qty-max">
 								</div>
 								<button type="submit" class="btn btn-default">Submit</button>
 							</form>

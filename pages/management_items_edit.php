@@ -187,7 +187,7 @@
 								<p class="help-block">Name is mandatory. A-Z, a-z, 0-9, - and space.</p>
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Description" name="description" value="<?PHP if (!empty($desc)) { print $desc; } ?>">
+								<input class="form-control" placeholder="Description" name="description" autocomplete="off" value="<?PHP if (!empty($desc)) { print $desc; } ?>">
 							</div>
 							<div class="form-group">
 								<label>Unit</label>

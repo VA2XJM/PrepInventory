@@ -189,7 +189,7 @@
 							<div class="form-inline">
 								<form role="form" method="post">
 									<label>Quantity</label><br>
-									<input class="form-control" placeholder="0" name="qty" autofocus> <button type="submit" class="btn btn-default" name="less">-</button> <button type="submit" class="btn btn-default" name="more">+</button>
+									<input class="form-control" placeholder="0" name="qty" type="number" autocomplete="off" autofocus> <button type="submit" class="btn btn-default" name="less">-</button> <button type="submit" class="btn btn-default" name="more">+</button>
 									<p class="help-block">Enter a quantity and press '-' or ENTER to remove it from inventory or '+' to add it to inventory.</p>
 								</form>
 							</div>

@@ -153,7 +153,7 @@
 								<p class="help-block">Name is mandatory. A-Z, a-z, 0-9, - and space.</p>
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Description" name="description">
+								<input class="form-control" placeholder="Description" name="description" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<label>Unit</label>
