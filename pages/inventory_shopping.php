@@ -139,6 +139,7 @@
 																		}
 																		
 																		# Retrieve inventory values
+																		$t_disploc = '';
 																		$sql4 = "SELECT * FROM `inventory` WHERE `item`='$t_itm_id'";
 																		$result4 = mysqli_query($link, $sql4);
 																		if (mysqli_num_rows($result4) > 0) { 
@@ -152,13 +153,77 @@
 																				
 																				if ($t_itm_tobuy > 0) {
 																					### Item location tree
+																					$t_loc_lev = explode("-", $t_itm_loc)[0];
+																					$t_loc_id = explode("-", $t_itm_loc)[1];
+																					$t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';  
+																					
+																					# Get location lvl 4
+																					if ($t_loc_lev == '4') {
+																						$sql5 = "SELECT * FROM `inv_locations_4` WHERE id = '$t_loc_id'";
+																						$result5 = mysqli_query($link, $sql5);
+																						if (mysqli_num_rows($result5) > 0) {
+																							while($row5 = mysqli_fetch_assoc($result5)) {
+																								$t_loc_name4 = $row5['name'];
+																								$t_loc_id3 = $row5['parent'];
+																							}
+																						}
+																					}
+																					
+																					# Get location lvl 3
+																					if ($t_loc_lev == '3' || !empty($t_loc_id3)) {
+																						if (!empty($t_loc_id3)) { $temp_id = $t_loc_id3; }
+																						else { $temp_id = $t_loc_id; }
+																						$sql5 = "SELECT * FROM `inv_locations_3` WHERE id = '$temp_id'";
+																						$result5 = mysqli_query($link, $sql5);
+																						if (mysqli_num_rows($result5) > 0) {
+																							while($row5 = mysqli_fetch_assoc($result5)) {
+																								$t_loc_name3 = $row5['name'];
+																								$t_loc_id2 = $row5['parent'];
+																							}
+																						}
+																					}
+																					
+																					# Get location lvl 2
+																					if ($t_loc_lev == '2' || !empty($t_loc_id2)) {
+																						if (!empty($t_loc_id2)) { $temp_id = $t_loc_id2; }
+																						else { $temp_id = $t_loc_id; }
+																						$sql5 = "SELECT * FROM `inv_locations_2` WHERE id = '$temp_id'";
+																						$result5 = mysqli_query($link, $sql5);
+																						if (mysqli_num_rows($result5) > 0) {
+																							while($row5 = mysqli_fetch_assoc($result5)) {
+																								$t_loc_name2 = $row5['name'];
+																								$t_loc_id1 = $row5['parent'];
+																							}
+																						}
+																					}
+																					
+																					# Get location lvl 1
+																					if ($t_loc_lev == '1' || !empty($t_loc_id1)) {
+																						if (!empty($t_loc_id1)) { $temp_id = $t_loc_id1; }
+																						else { $temp_id = $t_loc_id; }
+																						$sql5 = "SELECT * FROM `inv_locations_1` WHERE id = '$temp_id'";
+																						$result5 = mysqli_query($link, $sql5);
+																						if (mysqli_num_rows($result5) > 0) {
+																							while($row5 = mysqli_fetch_assoc($result5)) {
+																								$t_loc_name1 = $row5['name'];
+																							}
+																						}
+																					}
+																					
+																					# Make the Display
+																					$t_disploc .= '<br>';
+																					$t_disploc .= "$t_loc_name1";
+																					if (!empty($t_loc_name2)) { $t_disploc .= " > $t_loc_name2"; }
+																					if (!empty($t_loc_name3)) { $t_disploc .= " > $t_loc_name3"; }
+																					if (!empty($t_loc_name4)) { $t_disploc .= " > $t_loc_name4"; }
+																					$t_disploc .= ' : '. $t_itm_qty .' / '. $t_itm_qtymax .' = <strong>'. $t_itm_tobuy .'</strong>';
 																				}
 																			}
 																		}
-																		$t_itm_rows .= '<tr><td>&emsp;&emsp;<img src="'. $t_itm_icon .'"  class="icon"></td><td>'. $t_itm_name .'<br>'. $t_itm_desc .'</td><td class="text-right"><strong>Buy: '. $t_itm_ttb .' '. $t_itm_uname .'</strong></td></tr>';
+																		$t_itm_rows .= '<tr><td>&emsp;&emsp;<img src="'. $t_itm_icon .'"  class="icon"></td><td>'. $t_itm_name .'<br>'. $t_itm_desc .'<br>'. $t_disploc .'</td><td class="text-right"><strong>Buy: '. $t_itm_ttb .' '. $t_itm_uname .'</strong></td></tr>';
 																	}
 																	if (!empty($t_itm_ttb) && $t_itm_ttb > 0) {
-																		$t_scat_rows .= '<tr><td>&emsp;<img src="'. $t_scat_icon .'" class="icon"></td><td>'. $t_scat_name .'<br>'. $t_scat_desc .'</td><td class="text-right"></td></tr>';
+																		$t_scat_rows .= '<tr><td>&emsp;<img src="'. $t_scat_icon .'" class="icon"></td><td>'. $t_scat_name .''. $t_scat_desc .'</td><td class="text-right"></td></tr>';
 																		$t_scat_rows .= $t_itm_rows;
 																	}
 																}
@@ -188,6 +253,7 @@
 																}
 																
 																# Retrieve inventory values
+																$t_disploc = '';
 																$sql4 = "SELECT * FROM `inventory` WHERE `item`='$t_itm_id'";
 																$result4 = mysqli_query($link, $sql4);
 																if (mysqli_num_rows($result4) > 0) { 
@@ -201,10 +267,74 @@
 																		
 																		if ($t_itm_tobuy > 0) {
 																			### item location tree
+																			$t_loc_lev = explode("-", $t_itm_loc)[0];
+																			$t_loc_id = explode("-", $t_itm_loc)[1];
+																			$t_loc_id3 = ''; $t_loc_id2 = ''; $t_loc_id1 = '';  
+																			
+																			# Get location lvl 4
+																			if ($t_loc_lev == '4') {
+																				$sql5 = "SELECT * FROM `inv_locations_4` WHERE id = '$t_loc_id'";
+																				$result5 = mysqli_query($link, $sql5);
+																				if (mysqli_num_rows($result5) > 0) {
+																					while($row5 = mysqli_fetch_assoc($result5)) {
+																						$t_loc_name4 = $row5['name'];
+																						$t_loc_id3 = $row5['parent'];
+																					}
+																				}
+																			}
+																			
+																			# Get location lvl 3
+																			if ($t_loc_lev == '3' || !empty($t_loc_id3)) {
+																				if (!empty($t_loc_id3)) { $temp_id = $t_loc_id3; }
+																				else { $temp_id = $t_loc_id; }
+																				$sql5 = "SELECT * FROM `inv_locations_3` WHERE id = '$temp_id'";
+																				$result5 = mysqli_query($link, $sql5);
+																				if (mysqli_num_rows($result5) > 0) {
+																					while($row5 = mysqli_fetch_assoc($result5)) {
+																						$t_loc_name3 = $row5['name'];
+																						$t_loc_id2 = $row5['parent'];
+																					}
+																				}
+																			}
+																			
+																			# Get location lvl 2
+																			if ($t_loc_lev == '2' || !empty($t_loc_id2)) {
+																				if (!empty($t_loc_id2)) { $temp_id = $t_loc_id2; }
+																				else { $temp_id = $t_loc_id; }
+																				$sql5 = "SELECT * FROM `inv_locations_2` WHERE id = '$temp_id'";
+																				$result5 = mysqli_query($link, $sql5);
+																				if (mysqli_num_rows($result5) > 0) {
+																					while($row5 = mysqli_fetch_assoc($result5)) {
+																						$t_loc_name2 = $row5['name'];
+																						$t_loc_id1 = $row5['parent'];
+																					}
+																				}
+																			}
+																			
+																			# Get location lvl 1
+																			if ($t_loc_lev == '1' || !empty($t_loc_id1)) {
+																				if (!empty($t_loc_id1)) { $temp_id = $t_loc_id1; }
+																				else { $temp_id = $t_loc_id; }
+																				$sql5 = "SELECT * FROM `inv_locations_1` WHERE id = '$temp_id'";
+																				$result5 = mysqli_query($link, $sql5);
+																				if (mysqli_num_rows($result5) > 0) {
+																					while($row5 = mysqli_fetch_assoc($result5)) {
+																						$t_loc_name1 = $row5['name'];
+																					}
+																				}
+																			}
+																			
+																			# Make the Display
+																			$t_disploc .= '<br>';
+																			$t_disploc .= "$t_loc_name1";
+																			if (!empty($t_loc_name2)) { $t_disploc .= " > $t_loc_name2"; }
+																			if (!empty($t_loc_name3)) { $t_disploc .= " > $t_loc_name3"; }
+																			if (!empty($t_loc_name4)) { $t_disploc .= " > $t_loc_name4"; }
+																			$t_disploc .= ' : '. $t_itm_qty .' / '. $t_itm_qtymax .' = <strong>'. $t_itm_tobuy .'</strong>';
 																		}
 																	}
 																}
-																$t_itm_rows .= '<tr><td>&emsp;<img src="'. $t_itm_icon .'"  class="icon"></td><td>'. $t_itm_name .'<br>'. $t_itm_desc .'</td><td class="text-right"><strong>Buy: '. $t_itm_ttb .' '. $t_itm_uname .'</strong></td></tr>';
+																$t_itm_rows .= '<tr><td>&emsp;<img src="'. $t_itm_icon .'"  class="icon"></td><td>'. $t_itm_name .'<br>'. $t_itm_desc .''. $t_disploc .'</td><td class="text-right"><strong>Buy: '. $t_itm_ttb .' '. $t_itm_uname .'</strong></td></tr>';
 															}
 														}
 														
