@@ -144,14 +144,15 @@
 																		$result4 = mysqli_query($link, $sql4);
 																		if (mysqli_num_rows($result4) > 0) { 
 																			while($row4 = mysqli_fetch_assoc($result4)) {
+																				$t_itm_id = $row4['id'];
 																				$t_itm_loc = $row4['location'];
 																				$t_itm_qty = $row4['qty'];
 																				$t_itm_qtymax = $row4['qty_max'];
 																				$t_itm_tobuy = $t_itm_qtymax - $t_itm_qty;
-																				if ($t_itm_tobuy < 1) { $t_itm_tobuy = '0'; }
+																				if ($t_itm_tobuy < '0') { $t_itm_tobuy = '0'; }
 																				$t_itm_ttb = $t_itm_ttb + $t_itm_tobuy;
 																				
-																				if ($t_itm_tobuy > 0) {
+																				if ($t_itm_tobuy > '0') {
 																					### Item location tree
 																					$t_loc_lev = explode("-", $t_itm_loc)[0];
 																					$t_loc_id = explode("-", $t_itm_loc)[1];
@@ -212,12 +213,12 @@
 																					}
 																					
 																					# Make the Display
-																					$t_disploc .= '<br>';
+																					$t_disploc .= '<br><a href="inventory_details.php?id='. $t_itm_id .'">';
 																					$t_disploc .= "$t_loc_name1";
 																					if (!empty($t_loc_name2)) { $t_disploc .= " > $t_loc_name2"; }
 																					if (!empty($t_loc_name3)) { $t_disploc .= " > $t_loc_name3"; }
 																					if (!empty($t_loc_name4)) { $t_disploc .= " > $t_loc_name4"; }
-																					$t_disploc .= ' : '. $t_itm_qty .' / '. $t_itm_qtymax .' = <strong>'. $t_itm_tobuy .'</strong>';
+																					$t_disploc .= '</a> : '. $t_itm_qty .' / '. $t_itm_qtymax .' = <strong>'. $t_itm_tobuy .'</strong>';
 																				}
 																			}
 																		}
@@ -257,16 +258,17 @@
 																$t_disploc = '';
 																$sql4 = "SELECT * FROM `inventory` WHERE `item`='$t_itm_id'";
 																$result4 = mysqli_query($link, $sql4);
-																if (mysqli_num_rows($result4) > 0) { 
+																if (mysqli_num_rows($result4) > '0') { 
 																	while($row4 = mysqli_fetch_assoc($result4)) {
+																		$t_itm_id = $row4['id'];
 																		$t_itm_loc = $row4['location'];
 																		$t_itm_qty = $row4['qty'];
 																		$t_itm_qtymax = $row4['qty_max'];
 																		$t_itm_tobuy = $t_itm_qtymax - $t_itm_qty;
-																		if ($t_itm_tobuy < 1) { $t_itm_tobuy = '0'; }
+																		if ($t_itm_tobuy < '0') { $t_itm_tobuy = '0'; }
 																		$t_itm_ttb = $t_itm_ttb + $t_itm_tobuy;
 																		
-																		if ($t_itm_tobuy > 0) {
+																		if ($t_itm_tobuy > '0') {
 																			### item location tree
 																			$t_loc_lev = explode("-", $t_itm_loc)[0];
 																			$t_loc_id = explode("-", $t_itm_loc)[1];
@@ -327,12 +329,12 @@
 																			}
 																			
 																			# Make the Display
-																			$t_disploc .= '<br>';
+																			$t_disploc .= '<br><a href="inventory_details.php?id='. $t_itm_id .'">';
 																			$t_disploc .= "$t_loc_name1";
 																			if (!empty($t_loc_name2)) { $t_disploc .= " > $t_loc_name2"; }
 																			if (!empty($t_loc_name3)) { $t_disploc .= " > $t_loc_name3"; }
 																			if (!empty($t_loc_name4)) { $t_disploc .= " > $t_loc_name4"; }
-																			$t_disploc .= ' : '. $t_itm_qty .' / '. $t_itm_qtymax .' = <strong>'. $t_itm_tobuy .'</strong>';
+																			$t_disploc .= '</a> : '. $t_itm_qty .' / '. $t_itm_qtymax .' = <strong>'. $t_itm_tobuy .'</strong>';
 																		}
 																	}
 																}
@@ -367,6 +369,7 @@
 														$result2 = mysqli_query($link, $sql2);
 														if (mysqli_num_rows($result2) > 0) { 
 															while($row2 = mysqli_fetch_assoc($result2)) {
+																$t_itm_id = $row2['id'];
 																$t_tobuy = $row2['qty_max'] - $row2['qty'];
 																$t_loc = $row2['location'];
 																if ($t_tobuy > 0) {
@@ -432,12 +435,12 @@
 																	}
 																	
 																	# Make the Display
-																	$t_disploc .= '<br>';
+																	$t_disploc .= '<br><a href="inventory_details.php?id='. $t_itm_id .'">';
 																	$t_disploc .= "$t_loc_name1";
 																	if (!empty($t_loc_name2)) { $t_disploc .= " > $t_loc_name2"; }
 																	if (!empty($t_loc_name3)) { $t_disploc .= " > $t_loc_name3"; }
 																	if (!empty($t_loc_name4)) { $t_disploc .= " > $t_loc_name4"; }
-																	$t_disploc .= ' : '. $row2['qty'] .' / '. $row2['qty_max'] .' = <strong>'. $t_tobuy .'</strong>';
+																	$t_disploc .= '</a> : '. $row2['qty'] .' / '. $row2['qty_max'] .' = <strong>'. $t_tobuy .'</strong>';
 																}
 															}
 														}
