@@ -201,7 +201,7 @@
 							<a href="#"><i class="fa fa-files-o fa-fw"></i> Paper Forms<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="paperforms_maninvpickup.php">Manual Inventory Pick Up</a>
+									<a href="paperforms_maninvpickup.php">Manual Inventory Pick List</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
