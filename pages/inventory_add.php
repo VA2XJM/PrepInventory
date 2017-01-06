@@ -130,7 +130,16 @@
 											if (mysqli_num_rows($result) < 1) { print ""; }
 											else {
 												while($row = mysqli_fetch_assoc($result)) {
-													print '<option value="'. $row['id'] .'">' . $row['name'] . '</option>';
+													$item_unit = $row['unit'];
+													$sql2 = "SELECT * FROM `inv_units` WHERE `id` = '$item_unit'";
+													$result2 = mysqli_query($link, $sql2);
+													if (mysqli_num_rows($result2) > 0) {
+														while($row2 = mysqli_fetch_assoc($result2)) {
+															$unit_name = $row2['name'];
+														}
+													}
+													else { $unit_name = "Unit"; }
+													print '<option value="'. $row['id'] .'">' . $row['name'] . ' ('.$unit_name.')</option>';
 												}
 											}
 										?>
@@ -174,8 +183,8 @@
 								</div>
 								<div class="form-inline">
 									<label>Quantity available &emsp;&emsp;&emsp;&nbsp;  Quantity maximum</label><br>
-									<input class="form-control" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" placeholder="1" value="1" name="qty-max">
-								</div>
+									<input class="form-control" type="number" autocomplete="off" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="qty-max">
+								</div><br>
 								<button type="submit" class="btn btn-default">Submit</button>
 							</form>
 							

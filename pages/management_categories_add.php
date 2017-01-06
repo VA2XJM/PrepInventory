@@ -160,7 +160,7 @@
 								<p class="help-block">Name is mandatory. A-Z, a-z, 0-9, - and space.</p>
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Description" name="description">
+								<input class="form-control" placeholder="Description" name="description" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<input class="form-control" type="hidden" placeholder="" name="parent" value="<?PHP if (!empty($_GET['parent'])) { print $_GET['parent']; } elseif (!empty($_POST['parent'])) { print $_POST['parent']; } else { print '0'; } ?>" disabled>

@@ -64,6 +64,17 @@
 			$inv_location = $row['location'];
 			$inv_qty = $row['qty'];
 			$inv_qtymax = $row['qty_max'];
+
+			# Load location
+			$loc_lev = explode("-", $inv_location)[0];
+			$loc_id = explode("-", $inv_location)[1];
+			$sql2 = "SELECT * FROM `inv_locations_$loc_lev` WHERE `id` = '$loc_id'";
+			$result2 = mysqli_query($link, $sql2);
+			if (mysqli_num_rows($result2) > 0) {
+				while($row2 = mysqli_fetch_assoc($result2)) {
+					$loc_name = $row2['name'];
+				}
+			}
 			
 			# Load more details
 			$sql2 = "SELECT * FROM `inv_items` WHERE `id` = '$inv_item'";
@@ -95,6 +106,7 @@
 									$unit_name = $row4['name'];
 								}
 							}
+							else { $unit_name = "Unit"; }
 						}
 					}
 				}
@@ -185,11 +197,12 @@
 								print '	<div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div>';
 							?>
 							<div><strong>Category:</strong> <img src="<?PHP print $cat_icon; ?>" class="icon"> <?PHP print $cat_name; ?></div>
+							<div><strong>Location:</strong> <?PHP print $loc_name; ?></div>
 							<hr>
 							<div class="form-inline">
 								<form role="form" method="post">
-									<label>Quantity</label><br>
-									<input class="form-control" placeholder="0" name="qty" autofocus> <button type="submit" class="btn btn-default" name="less">-</button> <button type="submit" class="btn btn-default" name="more">+</button>
+									<label>Quantity (<?PHP print $unit_name; ?>)</label><br>
+									<input class="form-control" placeholder="0" name="qty" type="number" autocomplete="off" autofocus> <button type="submit" class="btn btn-default" name="less">-</button> <button type="submit" class="btn btn-default" name="more">+</button>
 									<p class="help-block">Enter a quantity and press '-' or ENTER to remove it from inventory or '+' to add it to inventory.</p>
 								</form>
 							</div>

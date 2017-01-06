@@ -193,7 +193,7 @@
 								</div>
 								<div class="form-inline">
 									<label>Quantity available &emsp;&emsp;&emsp;&nbsp;  Quantity maximum</label><br>
-									<input class="form-control" placeholder="0" name="qty" value="<?PHP print $dqty; ?>" disabled> &nbsp; <input class="form-control" placeholder="1" value="<?PHP print $dqtymax; ?>" name="qty-max">
+									<input class="form-control" placeholder="0" name="qty" value="<?PHP print $dqty; ?>" disabled> &nbsp; <input class="form-control" placeholder="1" type="number" autocomplete="off" value="<?PHP print $dqtymax; ?>" name="qty-max">
 								</div>
 								<button type="submit" class="btn btn-default">Submit</button>
 							</form>
