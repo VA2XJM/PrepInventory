@@ -106,6 +106,7 @@
 									$unit_name = $row4['name'];
 								}
 							}
+							else { $unit_name = "Unit"; }
 						}
 					}
 				}
