@@ -3,12 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 04, 2015 at 12:58 AM
+-- Generation Time: Jan 07, 2017 at 01:47 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.5.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `prepinv`
@@ -139,6 +145,7 @@ CREATE TABLE IF NOT EXISTS `inv_locations_4` (
 CREATE TABLE IF NOT EXISTS `inv_log` (
   `id` int(32) NOT NULL,
   `item` int(16) NOT NULL,
+  `location` varchar(16) NOT NULL,
   `action` varchar(8) NOT NULL DEFAULT '=',
   `qty` decimal(16,2) NOT NULL DEFAULT '0.00',
   `user` varchar(64) NOT NULL,
@@ -274,3 +281,6 @@ ALTER TABLE `inv_log`
 --
 ALTER TABLE `inv_units`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

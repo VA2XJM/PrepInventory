@@ -14,6 +14,8 @@
 		$username = $_POST['username'];
 		if (!empty($conf['user'][$username]['password']) && $conf['user'][$username]['password'] == $_POST['password']) {
 			$_SESSION['username'] = $_POST['username'];
+			$_SESSION['role'] = $conf['user'][$username]['role'];
+			$_SESSION['name'] = $conf['user'][$username]['name'];
 			header('location:index.php');
 		}
 		else { $error = 1; }

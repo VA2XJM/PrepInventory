@@ -67,6 +67,23 @@
 					<!-- /.dropdown-tasks -->
 				</li>
 				<!-- /.dropdown -->
+
+				<?PHP
+					if ($_SESSION['role'] == 'admin') { ?>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="fa fa-star fa-fw"></i>  <i class="fa fa-caret-down"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-user">
+						<li><a href="admin_invlog.php"><i class="fa fa-area-chart fa-fw"></i> Inventory Log</a>
+						</li>
+					</ul>
+					<!-- /.dropdown-user -->
+				</li>
+					<?PHP }
+				?>
+				<!-- /.dropdown -->
+
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -141,6 +158,9 @@
 							<ul class="nav nav-second-level">
 								<li>
 									<a href="paperforms_maninvpickup.php">Manual Inventory Pick List</a>
+								</li>
+								<li>
+									<a href="paperforms_maninvrev.php">Manual Inventory Revision List</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->

@@ -39,7 +39,7 @@
 
 				# Add a line to the inventory log
 				$username = $_SESSION['username'];
-				$sql = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`) VALUES ('$item', '+', '$qty', '$username')";
+				$sql = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`, `location`) VALUES ('$item', '+', '$qty', '$username', '$location')";
 				$result = mysqli_query($link, $sql);
 			}
 			else {

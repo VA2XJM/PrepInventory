@@ -38,7 +38,7 @@
 <body>
 	<div style="align: center;">
 		<h1>PrepInventory</h1>
-		<h3>Pick up list for <?PHP print $loc_name; ?></h3>
+		<h3>Revision list for <?PHP print $loc_name; ?></h3>
 	</div>
 
 	<?php
@@ -56,7 +56,7 @@
 					}
 				}
 			
-				print '<table border="1" WIDTH="600"><tr><td>'. $row['name'] .'<br>'. $row['description'] .'</td><td rowspan="2" valign="top" width="150"><small>Out ('. $unit .'):</small></td></tr></tr><td>Max: '. $row['qty_max'] .' '. $unit .'</td></tr></table>';
+				print '<table border="1" WIDTH="600"><tr><td>'. $row['name'] .'<br>'. $row['description'] .'</td><td rowspan="2" valign="top" width="150"><small>Actual ('. $unit .'):</small></td></tr></tr><td>Quantity: '.$row['qty'].' / '. $row['qty_max'] .' '. $unit .'</td></tr></table>';
 				print '<br>';
 			}
 		}
