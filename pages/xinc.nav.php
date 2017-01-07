@@ -159,6 +159,9 @@
 								<li>
 									<a href="paperforms_maninvpickup.php">Manual Inventory Pick List</a>
 								</li>
+								<li>
+									<a href="paperforms_maninvrev.php">Manual Inventory Revision List</a>
+								</li>
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
