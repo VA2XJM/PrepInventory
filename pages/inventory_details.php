@@ -23,6 +23,7 @@
 			while($row = mysqli_fetch_assoc($result)) {
 				$t_qty = $row['qty'];
 				$t_item = $row['item'];
+				$t_location = $row['location'];
 			}
 			
 			# Set qty to 0 if nothing submited.
@@ -49,7 +50,7 @@
 			
 			# Add a line to the inventory log
 			$username = $_SESSION['username'];
-			$sql = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`) VALUES ('$t_item', '$inv_act', '$inv_qty', '$username')";
+			$sql = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`, `location`) VALUES ('$t_item', '$inv_act', '$inv_qty', '$username', '$t_location')";
 			$result = mysqli_query($link, $sql);
 		}
 	}
