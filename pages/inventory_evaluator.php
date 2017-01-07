@@ -63,14 +63,15 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Consumption Tracker</h1>
+					<h1 class="page-header">Consumption Evaluator</h1>
+					The listing below shows evaluation of the consumption of every item in your inventory. Items will appear on this list after you took at least 1 unit out of inventory. <br><br>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
-					<table width="100%"><tr><th>Item</th><th>Quantity Per Week</th><th>Quantity Per Month</th><th>Quantity Per Year</th></tr>
+					<table width="100%"><tr><th>Item</th><th>Quantity Per Week</th><th>Quantity Per Month</th><th>Quantity Per Year</th><th>Since</th></tr>
 					<?PHP
 						$sql = "SELECT * FROM inv_items ORDER BY `name`";
 						$result = mysqli_query($link, $sql);
@@ -93,24 +94,25 @@
 								$result2 = mysqli_query($link, $sql2);
 								if (mysqli_num_rows($result2) > 0) {
 									while($row2 = mysqli_fetch_assoc($result2)) { 
-										$firstdate = strtotime($row2['datetime']);
+										$firstdate = $row2['datetime'];
+										$past = strtotime($firstdate);
 										$now = time();
-										$datediff = $now - $firstdate;
+										$datediff = $now - $past;
 
-										$weeks = floor($datediff / (60 * 60 * 24 * 7));
-										$months = floor($datediff / (60 * 60 * 24 * 30));
-										$years = floor($datediff / (60 * 60 * 24 * 365));
+										$weeks = ceil($datediff / (60 * 60 * 24 * 7));
+										$months = ceil($datediff / (60 * 60 * 24 * 30));
+										$years = ceil($datediff / (60 * 60 * 24 * 365));
 									}
 								}
 								else { $firstdate = 'x'; }
 								
 								# Check if items have been used before otherwise nothing is shown. Then retrieve the quantity and count.
 								if ($firstdate !== 'x') {
-									$sql2 = "SELECT SUM(qty) AS qty FROM inv_log WHERE item = $itemid AND action = '-'";
+									$sql2 = "SELECT SUM(qty) AS tqty FROM inv_log WHERE item = $itemid AND action = '-'";
 									$result2 = mysqli_query($link, $sql2);
 									if (mysqli_num_rows($result2) > 0) {
 										while($row2 = mysqli_fetch_assoc($result2)) { 
-											$qty = $row2['qty'];
+											$qty = $row2['tqty'];
 
 											$qtyweeks = round($qty / $weeks);
 											$qtymonths = round($qty / $months);
@@ -118,7 +120,7 @@
 										}
 									}
 									else { $firstdate = 'x'; } 
-									print "<tr><td>$item ($unit)</td><td>$qtyweeks</td><td>$qtymonths</td><td>$qtyyears</td></tr>"; 
+									print "<tr><td>$item ($unit)</td><td>$qtyweeks</td><td>$qtymonths</td><td>$qtyyears</td><td>$firstdate</td></tr>"; 
 								}
 							}
 						}

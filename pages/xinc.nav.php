@@ -130,7 +130,7 @@
 									<a href="inventory_shopping.php">Shopping List</a>
 								</li>
 								<li>
-									<a href="inventory_tracker.php">Consumption Tracker</a>
+									<a href="inventory_evaluator.php">Consumption Evaluator</a>
 								</li>
 								<li>
 									<a href="inventory_add.php">Add item in inventory</a>
