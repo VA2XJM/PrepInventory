@@ -76,7 +76,7 @@
 				<div class="col-lg-12">
 					<table width="100%"><tr><th>Date & Time</th><th>Item</th><th>Location</th><th>Quantity</th><th>User</th></tr>
 					<?PHP
-						$sql = "SELECT * FROM `inv_log` ORDER BY `id` DESC";
+						$sql = "SELECT * FROM `inv_log` ORDER BY `id` DESC LIMIT 0,99";
 						$result = mysqli_query($link, $sql);
 						if (mysqli_num_rows($result) < 1) { print '<tr><td colspan="5">No LOG available.</td></tr>'; }
 						else {
