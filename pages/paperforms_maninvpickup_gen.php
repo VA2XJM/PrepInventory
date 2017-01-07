@@ -10,7 +10,21 @@
 		die();
 	}
 	
-	if (!empty($_GET['loc'])) { $loc = $_GET['loc']; }
+	if (!empty($_GET['loc'])) { 
+		$loc = $_GET['loc']; 
+
+		# Load location
+		$loc_lev = explode("-", $loc)[0];
+		$loc_id = explode("-", $loc)[1];
+		$sql2 = "SELECT * FROM `inv_locations_$loc_lev` WHERE `id` = '$loc_id'";
+		$result2 = mysqli_query($link, $sql2);
+		if (mysqli_num_rows($result2) > 0) {
+			while($row2 = mysqli_fetch_assoc($result2)) {
+				$loc_name = $row2['name'];
+			}
+		}
+		else { $loc_name = "Unknown Location"; }
+	}
 	else { $loc = 0; }
 ?>
 
@@ -24,7 +38,7 @@
 <body>
 	<div style="align: center;">
 		<h1>PrepInventory</h1>
-		<h3>### Location here ###</h3>
+		<h3><?PHP print $loc_name; ?></h3>
 	</div>
 
 	<?php
