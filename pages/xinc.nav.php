@@ -160,6 +160,9 @@
 							<a href="#"><i class="fa fa-files-o fa-fw"></i> Paper Forms<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
+									<a href="paperforms_inventory.php">Printable Inventory</a>
+								</li>
+								<li>
 									<a href="paperforms_maninvpickup.php">Manual Inventory Pick List</a>
 								</li>
 								<li>
