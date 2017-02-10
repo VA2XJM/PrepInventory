@@ -23,7 +23,7 @@
 	# Do not change settings below, this could break your setup and result in data loss. 
 	# Do not change settings below, this could break your setup and result in data loss. 
 	# Do not change settings below, this could break your setup and result in data loss. 
-	$g_version = '0.2.0';
+	$g_version = '0.3.0';
 
 	####################################################################################
 
