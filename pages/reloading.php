@@ -72,7 +72,10 @@
 				<div class="col-lg-12">
 					<p align="center"><a href="reloading.php?page=batches">Batches</a> - <a href="reloading.php?page=calibers">Calibers</a> - <a href="reloading.php?page=data">Data</a> - <a href="reloading.php?page=shelllot">Shell Lots</a></p>
 
-					<?PHP if (isset($_GET['page'])) { $page = 'reloading_'.$_GET['page'].'.php'; include($page); } ?>
+					<?PHP 
+						if (isset($_GET['page'])) { $page = 'reloading_'.$_GET['page'].'.php'; include($page); } 
+						else { print "Use the menu above to navigate in Ammunition Reloading app."; }
+					?>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
