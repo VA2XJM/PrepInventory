@@ -70,7 +70,7 @@
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
-					<p align="center"><a href="reloading.php?page=batches">Batches</a> - <a href="reloading.php?page=calibers">Calibers</a> - <a href="reloading.php?page=data">Data</a> - <a href="reloading.php?page=shelllot">Shell Lots</a></p>
+					<p align="center"><a href="reloading.php?page=batches">Batches</a> - <a href="reloading.php?page=calibers">Calibers</a> - <a href="reloading.php?page=data">Data</a> - <a href="reloading.php?page=shelllots">Shell Lots</a></p>
 
 					<?PHP 
 						if (isset($_GET['page'])) { $page = 'reloading_'.$_GET['page'].'.php'; include($page); } 
