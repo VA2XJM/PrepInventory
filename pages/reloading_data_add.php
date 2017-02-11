@@ -13,7 +13,7 @@
 	#
 	## Checking values and correcting
 	#
-	if (isset($_POST['go'])) {
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (!is_numeric($_POST['powder_min'])) { $_POST['powder_min'] = '0'; }
 		if (!is_numeric($_POST['powder_max'])) { $_POST['powder_max'] = '0'; }
 		if (!is_numeric($_POST['maxol'])) { $_POST['maxol'] = '0'; }

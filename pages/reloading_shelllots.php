@@ -13,9 +13,13 @@
 	#
 	## Adding a new lot
 	#
-	if (!empty($_POST['name'])) {
-		$name = $_POST['name'];
-		$sql = "INSERT INTO `reloading_shell_lots` (`name`) VALUES ('$name')";
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$caliber = $_POST['caliber'];
+		$qty = $_POST['qty'];
+		$max_trim = $_POST['max-trim'];
+		$max_reload = $_POST['max-reload'];
+		$details = $_POST['details'];
+		$sql = "INSERT INTO `reloading_shell_lots` (`caliber`, `trim_max`, `reload_max`, `qty`, `details`) VALUES ('$caliber', '$max_trim', '$max_reload', '$qty', '$details')";
 		$result = mysqli_query($link, $sql);
 		if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">New shell lot added.</div></div>'; }
 		else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Error while adding new shell lot.</div></div>'; }
@@ -62,11 +66,26 @@
 		</div>
 		<div class="panel-body">
 			<form role="form" method="post">
-				- Caliber Selection
-				- Qty
-				- Max Trim
-				- Max Reload
-				- Details
+				<div class="form-group">
+					<label>Caliber</label>
+					<select class="form-control" name="caliber">
+					<?php
+						$sql = "SELECT * FROM `reloading_calibers` ORDER BY `name` ASC";
+						$result = mysqli_query($link, $sql);
+						if (mysqli_num_rows($result) < 1) { print ""; }
+						else {
+							while($row = mysqli_fetch_assoc($result)) {
+								print '<option value="'. $row['id'] .'">' . $row['name'] . '</option>';
+							}
+						}
+					?>
+					</select>
+				</div>
+				<div class="form-inline">
+					<label>Quantity &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; Max trim allowed &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; Max reload allowed &emsp;&emsp;&emsp;&emsp; Details/Notes</label><br>
+					<input class="form-control" type="number" autocomplete="off" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="max-trim"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="max-reload"> &nbsp; <input class="form-control" type="text" autocomplete="off" placeholder="" value="" name="details">
+				</div>
+				<p>Remember to take shells out of inventory if you have them accounted somewhere. In a next release, there will be an option to do it from here.</p><br>
 				<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 		</div>
