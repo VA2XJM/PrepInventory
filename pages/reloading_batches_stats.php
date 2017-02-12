@@ -11,16 +11,17 @@
 	}
 
 	#
-	## Removing batch
+	## Switch approval batch
 	#
-	if (!empty($_GET['delete'])) {
-		if (is_numeric($_GET['delete'])) {
-			$id = $_GET['delete'];
-			$sql = "DELETE FROM `reloading_batches` WHERE `id`='$id'";
+	if (!empty($_GET['switch'])) {
+		if (is_numeric($_GET['switch'])) {
+			$id = $_GET['switch'];
+			$act = $_GET['act'];
+			$sql = "UPDATE `reloading_batches` SET `test_result`='$act' WHERE id = '$id'";
 			$result = mysqli_query($link, $sql);
 
-			if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">Batch deleted.</div></div>'; }
-			else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Error while deleting batch.</div></div>'; }
+			if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">Batch status changed.</div></div>'; }
+			else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Error while changing batch status.</div></div>'; }
 		}
 		else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Numerical value required.</div></div>'; }
 	}
@@ -29,13 +30,13 @@
 	#
 	## Load and Display Batch
 	#
-	print '<h1>Batches</h1> Here is the actual list of batches that have not been shot yet. You can add new ones, delete existing ones or add grouping results.<br><b>Deleting a batch have no effects on data.</b>';
+	print '<h1>Batches - Results</h1> Here is the actual list of batches that have been shot. You can review grouping results and change acceptance status.';
 
 	if (isset($notice)) { print $notice; }
 
-	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches_stats">View past batches stats</a>';
-	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th width="20px">&nbsp;</th></tr>';
-	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NULL ORDER BY t1.id ASC";
+	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches">View open batches</a>';
+	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th>Grouping</th><th width="20px">&nbsp;</th></tr>';
+	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NOT NULL GROUP BY t1.id ORDER BY t1.test_grouping ASC";
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
@@ -43,6 +44,11 @@
 			$lot = $row['lot'];
 			$caliber = $row['caliber'];
 			$charge = $row['powder_charge'];
+			$grouping = $row['test_grouping'];
+			$grouping_unit = $row['test_grouping_unit'];
+			$test_result = $row['test_result'];
+			if ($test_result == '0') { $group_bg = "#FF0000"; $icon = "fa-thumbs-up"; $switch_act = "1"; }
+			else { $group_bg = "#00FF00"; $icon = "fa-thumbs-down"; $switch_act = "0"; } 
 
 			# Caliber Name
 			$sqlx = "SELECT * FROM reloading_calibers WHERE id = '$caliber'";
@@ -71,7 +77,12 @@
 			$resultx = mysqli_query($link, $sqlx);
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $primer_name = $rowx['name']; } }
 
-			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td><a href="?page=batches_results&id='. $row['bid'] .'" title="Input grouping results"><i class="fa fa-crosshairs fa-fw"></i></a> <a href="?page=batches&delete='. $row['bid'] .'" title="Delete"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			# Grouping unit name
+			$sqlx = "SELECT * FROM inv_units WHERE id = '$grouping_unit'";
+			$resultx = mysqli_query($link, $sqlx);
+			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $grouping_unit = $rowx['name']; } }
+
+			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td bgcolor="'.$group_bg.'">'.$grouping.' '.$grouping_unit.'</td><td><a href="?page=batches_stats&switch='. $row['bid'] .'&act='.$switch_act.'" title="Change accept/reject status"><i class="fa '.$icon.' fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';
