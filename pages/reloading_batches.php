@@ -33,7 +33,7 @@
 
 	if (isset($notice)) { print $notice; }
 
-	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches_stats">View past batches stats</a>';
+	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches_stats">View closed batches stats</a>';
 	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th width="20px">&nbsp;</th></tr>';
 	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NULL ORDER BY t1.id ASC";
 	$result = mysqli_query($link, $sql);
