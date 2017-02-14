@@ -71,7 +71,13 @@
 			$resultx = mysqli_query($link, $sqlx);
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $primer_name = $rowx['name']; } }
 
-			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td><a href="?page=batches_results&id='. $row['bid'] .'" title="Input grouping results"><i class="fa fa-crosshairs fa-fw"></i></a> <a href="?page=batches&delete='. $row['bid'] .'" title="Delete"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			# Check if Ammo LOT is existing or not.
+			#  If exists show results link
+			#  Else show batching link
+			if (!empty($lot)) { $slink = '<a href="?page=batches_results&id='. $row['bid'] .'" title="Input grouping results"><i class="fa fa-crosshairs fa-fw"></i></a>'; }
+			else { $slink = '<a href="?page=batches_assignlot&id='. $row['bid'] .'" title="Assign an ammo lot to this batch"><i class="fa fa-edit fa-fw"></i></a>'; }
+
+			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td>'.$slink.' <a href="?page=batches&delete='. $row['bid'] .'" title="Delete"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';
