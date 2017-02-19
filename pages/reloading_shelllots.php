@@ -53,7 +53,11 @@
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
-			print '<tr><td>'.$row['calibername'].' ('.$row['qty'].')</td><td>'.$row['lotid'].'</td><td>'.$row['reload'].' / '.$row['reload_max'].'</td><td>'.$row['trim'].' / '.$row['trim_max'].'</td><td>'.$row['details'].'</td><td><a href="?page=shelllots&delete='. $row['lotid'] .'"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			$reload_color = "";
+			if ($row['reload'] >= $row['reload_max']) { $reload_color = "#FF0000"; }
+			$trim_color = "";
+			if ($row['trim'] >= $row['trim_max']) { $trim_color = "#FF0000"; }
+			print '<tr><td>'.$row['calibername'].' ('.$row['qty'].')</td><td>'.$row['lotid'].'</td><td bgcolor="'.$reload_color.'">'.$row['reload'].' / '.$row['reload_max'].'</td><td bgcolor="'.$trim_color.'">'.$row['trim'].' / '.$row['trim_max'].'</td><td>'.$row['details'].'</td><td><a href="?page=shelllots&delete='. $row['lotid'] .'"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';
