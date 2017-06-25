@@ -111,7 +111,7 @@
 		$grouping = $_POST['grouping'];
 		$grouping_unit = $_POST['unit'];
 		$grouping_reject = '1';
-		$grouping_reject = $_POST['reject'];
+		if (isset($_POST['reject'])) { $grouping_reject = $_POST['reject']; }
 
 		if (is_numeric($_POST['grouping'])) {
 			$sql = "UPDATE `reloading_batches` SET `test_result`='$grouping_reject', `test_grouping`='$grouping', `test_grouping_unit`='$grouping_unit' WHERE id = '$id'";
