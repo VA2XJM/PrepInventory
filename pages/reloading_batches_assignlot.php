@@ -60,7 +60,7 @@
 					Assign a <b><?PHP print $caliber_name; ?></b> ammo lot to the batch <b><?PHP print $id; ?></b>.<br>
 					<select class="form-control" name="lot">
 					<?php
-						$sql = "SELECT * FROM `reloading_shell_lots` WHERE `caliber` = '$caliber' AND `reload` < `reload_max` AND `trim` <= `trim_max` ORDER BY `id` ASC";
+						$sql = "SELECT * FROM `reloading_shell_lots` WHERE `caliber` = '$caliber' AND `discarded` = '0' AND `reload` < `reload_max` AND `trim` <= `trim_max` ORDER BY `id` ASC";
 						$result = mysqli_query($link, $sql);
 						if (mysqli_num_rows($result) < 1) { print ""; }
 						else {
