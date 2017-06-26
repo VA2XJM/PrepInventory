@@ -28,6 +28,12 @@
 					$sqlx = "SELECT * FROM reloading_calibers WHERE id = '$caliber'";
 					$resultx = mysqli_query($link, $sqlx);
 					if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $caliber_name = $rowx['name']; } }
+
+					# Reloading DATA (For Inventory removal)
+					$inv_primer = $row['primer'];
+					$inv_bullet = $row['bullet'];
+					$inv_powder = $row['powder'];
+					$powder_qty = $row['powder_charge'];
 				}
 			}
 		}
@@ -78,7 +84,7 @@
 				</div>
 				<div class="checkbox">
 					<label>
-						<input name="inv_removal" type="checkbox" value="1" disabled>Remove reloading component from inventory
+						<input name="inv_removal" type="checkbox" value="1">Remove reloading component from inventory
 						<p class="help-block">Check this box to remove bullets, powder and primers from inventory right now. If not checked, you will need to manually remove component from inventory.</p>
 					</label>
 				</div><br>
@@ -90,6 +96,7 @@
 	}
 	else {
 		$lot = $_POST['lot'];
+		$notice = "";
 
 		if (is_numeric($_POST['lot'])) {
 			$sql = "UPDATE `reloading_batches` SET `lot`='$lot' WHERE id = '$id'"; $result = mysqli_query($link, $sql);
@@ -100,8 +107,50 @@
 				$sql = "UPDATE `reloading_shell_lots` SET `trim`=trim+1 WHERE id = '$lot'"; $result = mysqli_query($link, $sql);
 			}
 
-			if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">Batch has been updated.</div></div>'; }
-			else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Error while updating batch.</div></div>'; }
+			if (isset($_POST['inv_removal'])) {
+				# Get shells # in lot
+				$sqlz = "SELECT * FROM reloading_shell_lots WHERE id = '$lot'";
+				$resultz = mysqli_query($link, $sqlz);
+				if (mysqli_num_rows($resultz) > 0) {
+					while($rowz = mysqli_fetch_assoc($resultz)) {
+						$lot_qty = $rowz['qty'];
+					}
+				}
+
+				# Calculate powder qty to remove from inv.
+				# Other components are removed once per shell.
+				$rem_powder = $powder_qty * $lot_qty;
+
+				# Update inventory and put logs.
+				$sqlz = "UPDATE `inventory` SET `qty`=qty-$rem_powder WHERE id = '$inv_powder'"; $resultz = mysqli_query($link, $sqlz);
+				$sqlz = "UPDATE `inventory` SET `qty`=qty-$lot_qty WHERE id = '$inv_bullet'"; $resultz = mysqli_query($link, $sqlz);
+				$sqlz = "UPDATE `inventory` SET `qty`=qty-$lot_qty WHERE id = '$inv_primer'"; $resultz = mysqli_query($link, $sqlz);
+
+				# Find location for logs
+				$sqlz = "SELECT * FROM `inventory` WHERE `id` = '$inv_powder'";
+				$resultz = mysqli_query($link, $sqlz);
+				if (mysqli_num_rows($resultz) < 1) { $notice .= '<div class="panel panel-danger"><div class="panel-heading">Can\'t find inventory location for powder.</div></div>'; }
+				else { while($row = mysqli_fetch_assoc($resultz)) { $inv_loc_powder = $row['location']; } }
+
+				$sqlz = "SELECT * FROM `inventory` WHERE `id` = '$inv_bullet'";
+				$resultz = mysqli_query($link, $sqlz);
+				if (mysqli_num_rows($resultz) < 1) { $notice .= '<div class="panel panel-danger"><div class="panel-heading">Can\'t find inventory location for bullets.</div></div>'; }
+				else { while($row = mysqli_fetch_assoc($resultz)) { $inv_loc_bullet = $row['location']; } }
+
+				$sqlz = "SELECT * FROM `inventory` WHERE `id` = '$inv_primer'";
+				$resultz = mysqli_query($link, $sqlz);
+				if (mysqli_num_rows($resultz) < 1) { $notice .= '<div class="panel panel-danger"><div class="panel-heading">Can\'t find inventory location for primers.</div></div>'; }
+				else { while($row = mysqli_fetch_assoc($resultz)) { $inv_loc_primer = $row['location']; } }
+
+				# Add a line to the inventory log
+				$username = $_SESSION['username'];
+				$sqlz = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`, `location`) VALUES ('$inv_powder', '-', '$rem_powder', '$username', '$inv_loc_powder')"; $resultz = mysqli_query($link, $sqlz);
+				$sqlz = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`, `location`) VALUES ('$inv_bullet', '-', '$lot_qty', '$username', '$inv_loc_bullet')"; $resultz = mysqli_query($link, $sqlz);
+				$sqlz = "INSERT INTO `inv_log` (`item`, `action`, `qty`, `user`, `location`) VALUES ('$inv_primer', '-', '$lot_qty', '$username', '$inv_loc_primer')"; $resultz = mysqli_query($link, $sqlz);
+			}
+
+			if ($result) {	$notice .= '<div class="panel panel-success"><div class="panel-heading">Batch has been assigned.</div></div>'; }
+			else { $notice .= '<div class="panel panel-danger"><div class="panel-heading">Error while updating batch.</div></div>'; }
 		}
 		else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Numerical value required.</div></div>'; }
 		print $notice;
