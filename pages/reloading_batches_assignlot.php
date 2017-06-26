@@ -54,15 +54,17 @@
 					Assign a <b><?PHP print $caliber_name; ?></b> ammo lot to the batch <b><?PHP print $id; ?></b>.<br>
 					<select class="form-control" name="lot">
 					<?php
-						$sql = "SELECT * FROM `reloading_shell_lots` WHERE `caliber` = '$caliber' AND `reload` < `reload_max` AND `trim` < `trim_max` ORDER BY `id` ASC";
+						$sql = "SELECT * FROM `reloading_shell_lots` WHERE `caliber` = '$caliber' AND `reload` < `reload_max` AND `trim` <= `trim_max` ORDER BY `id` ASC";
 						$result = mysqli_query($link, $sql);
 						if (mysqli_num_rows($result) < 1) { print ""; }
 						else {
 							while($row = mysqli_fetch_assoc($result)) {
 								$lid = $row['id'];
+								$tn = '';
+								if ($row['trim'] == $row['trim_max']) { $tn = "*"; }
 								$sqlx = "SELECT * FROM `reloading_batches` WHERE lot = '$lid' AND test_grouping IS NULL";
 								$resultx = mysqli_query($link, $sqlx);
-								if (mysqli_num_rows($resultx) < 1) { print '<option value="'. $lid .'">Lot #' . $lid . '</option>'; }
+								if (mysqli_num_rows($resultx) < 1) { print '<option value="'. $lid .'">Lot #' . $lid . ' '. $tn .'</option>'; }
 							}
 						}
 					?>
@@ -71,6 +73,7 @@
 				<div class="checkbox">
 					<label>
 						<input name="trim" type="checkbox" value="1">This lot is/will be trimmed.
+						<p class="help-block">Above lots displaying an asterisc should be discarded if a new trim is necessary. If you decide to check the box and reload them once again, this shell lot will not be shown next time.</p>
 					</label>
 				</div><br>
 				<button type="submit" class="btn btn-default" name="go" value="1">Submit</button>
