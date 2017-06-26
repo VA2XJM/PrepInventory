@@ -55,12 +55,12 @@
 	}
 
 	#
-	## Removing caliber
+	## Removing lot
 	#
 	if (!empty($_GET['delete'])) {
 		if (is_numeric($_GET['delete'])) {
 			$id = $_GET['delete'];
-			$sql = "DELETE FROM `reloading_shell_lots` WHERE `id`='$id'";
+			$sql = "UPDATE `reloading_shell_lots` SET `discarded`='1' WHERE `id`='$id'";
 			$result = mysqli_query($link, $sql);
 
 			if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">Shell lot deleted.</div></div>'; }
