@@ -1,0 +1,5 @@
+# Execute the following SQL command to update your database.
+
+# Update to V0.3.0 from V0.2.0
+
+ALTER TABLE `reloading_shell_lots` CHANGE `qty` `qty` DECIMAL(6,2) NOT NULL DEFAULT '1.0';
