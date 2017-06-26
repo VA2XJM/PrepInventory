@@ -85,7 +85,7 @@
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $grouping_unit = $rowx['name']; } }
 
 			# Range unit name
-			$sqlx = "SELECT * FROM inv_units WHERE id = '$grouping_unit'";
+			$sqlx = "SELECT * FROM inv_units WHERE id = '$range_unit'";
 			$resultx = mysqli_query($link, $sqlx);
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $range_unit = $rowx['name']; } }
 

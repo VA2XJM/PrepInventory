@@ -127,11 +127,13 @@
 	else {
 		$grouping = $_POST['grouping'];
 		$grouping_unit = $_POST['unit'];
+		$distance = $_POST['distance'];
+		$distance_unit = $_POST['distance-unit'];
 		$grouping_reject = '1';
 		if (isset($_POST['reject'])) { $grouping_reject = $_POST['reject']; }
 
 		if (is_numeric($_POST['grouping'])) {
-			$sql = "UPDATE `reloading_batches` SET `test_result`='$grouping_reject', `test_grouping`='$grouping', `test_grouping_unit`='$grouping_unit' WHERE id = '$id'";
+			$sql = "UPDATE `reloading_batches` SET `test_result`='$grouping_reject', `test_grouping`='$grouping', `test_grouping_unit`='$grouping_unit', `test_distance`='$distance', `test_distance_unit`='$distance_unit' WHERE id = '$id'";
 			$result = mysqli_query($link, $sql);
 
 			if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">Batch stats has been added.</div></div>'; }

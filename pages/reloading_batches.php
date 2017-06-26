@@ -34,7 +34,7 @@
 	if (isset($notice)) { print $notice; }
 
 	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches_stats">View closed batches stats</a>';
-	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th width="20px">&nbsp;</th></tr>';
+	print '<table border="1" width="90%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th width="20px">&nbsp;</th></tr>';
 	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NULL ORDER BY t1.id ASC";
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
@@ -74,7 +74,7 @@
 			# Check if Ammo LOT is existing or not.
 			#  If exists show results link
 			#  Else show batching link
-			if (!empty($lot)) { $slink = '<a href="?page=batches_results&id='. $row['bid'] .'" title="Input grouping results"><i class="fa fa-crosshairs fa-fw"></i></a>'; }
+			if (!empty($lot)) { $slink = '<a href="?page=batches_reload&id='. $row['bid'] .'" title="See reloading data"><i class="fa fa-magic fa-fw"></i></a><a href="?page=batches_results&id='. $row['bid'] .'" title="Input grouping results"><i class="fa fa-crosshairs fa-fw"></i></a>'; }
 			else { $slink = '<a href="?page=batches_assignlot&id='. $row['bid'] .'" title="Assign an ammo lot to this batch"><i class="fa fa-edit fa-fw"></i></a>'; }
 
 			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td>'.$slink.' <a href="?page=batches&delete='. $row['bid'] .'" title="Delete"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
