@@ -73,7 +73,7 @@
 				<div class="checkbox">
 					<label>
 						<input name="trim" type="checkbox" value="1">This lot is/will be trimmed.
-						<p class="help-block">Above lots displaying an asterisc should be discarded if a new trim is necessary. If you decide to check the box and reload them once again, this shell lot will not be shown next time.</p>
+						<p class="help-block">Above lots displaying an asterisc (*) should be discarded if a new trim is necessary. If you decide to check the box and reload them once again, this shell lot will not be shown next time.</p>
 					</label>
 				</div>
 				<div class="checkbox">

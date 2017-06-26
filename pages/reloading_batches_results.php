@@ -17,12 +17,12 @@
 		if (is_numeric($_GET['id'])) {
 			$id = $_GET['id'];
 
-			$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NULL ORDER BY t1.id ASC";
+			$sql = "SELECT *, t1.id AS `bid`, t1.lot AS `lot` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE t1.id = $id AND test_grouping IS NULL ORDER BY t1.id ASC";
 			$result = mysqli_query($link, $sql);
 			if (mysqli_num_rows($result) > 0) {
 				while($row = mysqli_fetch_assoc($result)) {
 					# Batch infos:
-					$lot = $row['lot'];
+					$ammolot = $row['lot'];
 					$caliber = $row['caliber'];
 					$charge = $row['powder_charge'];
 
@@ -67,7 +67,7 @@
 	if (isset($notice)) { print $notice; }
 
 	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th></tr>';
-	print '<tr><td>'.$id.'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td></tr>';
+	print '<tr><td>'.$id.'</td><td>'.$ammolot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td></tr>';
 	print '</table><br>';
 
 	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -96,9 +96,26 @@
 					?>
 					</select>
 				</div>
+				<div class="form-inline">
+					<label>Distance & Unit</label><br>
+					<input class="form-control" type="text" autocomplete="off" placeholder="0" name="distance">
+					<select class="form-control" name="distance-unit">
+					<?php
+						$sql = "SELECT * FROM `inv_units` ORDER BY `name` ASC";
+						$result = mysqli_query($link, $sql);
+						if (mysqli_num_rows($result) < 1) { print ""; }
+						else {
+							while($row = mysqli_fetch_assoc($result)) {
+								print '<option value="'. $row["id"] .'">' . $row["name"] . '</option>';
+							}
+						}
+					?>
+					</select>
+				</div>
 				<div class="checkbox">
 					<label>
 						<input name="reject" type="checkbox" value="0">Reject this batch.
+						<p class="help-block">Reject this batch if you do not intend to reload this caliber again using this recipe. It will show results with RED background in the results area.</p>
 					</label>
 				</div><br>
 				<button type="submit" class="btn btn-default" name="go" value="1">Submit</button>

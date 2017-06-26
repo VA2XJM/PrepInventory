@@ -35,7 +35,7 @@
 	if (isset($notice)) { print $notice; }
 
 	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches">View open batches</a>';
-	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th>Grouping</th><th width="20px">&nbsp;</th></tr>';
+	print '<table border="1" width="80%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th>Grouping</th><th>Range</th><th width="20px">&nbsp;</th></tr>';
 	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NOT NULL GROUP BY t1.id ORDER BY t1.test_grouping ASC";
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
@@ -46,6 +46,8 @@
 			$charge = $row['powder_charge'];
 			$grouping = $row['test_grouping'];
 			$grouping_unit = $row['test_grouping_unit'];
+			$range = $row['test_distance'];
+			$range_unit = $row['test_distance_unit'];
 			$test_result = $row['test_result'];
 			if ($test_result == '0') { $group_bg = "#FF0000"; $icon = "fa-thumbs-up"; $switch_act = "1"; }
 			else { $group_bg = "#00FF00"; $icon = "fa-thumbs-down"; $switch_act = "0"; } 
@@ -82,7 +84,12 @@
 			$resultx = mysqli_query($link, $sqlx);
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $grouping_unit = $rowx['name']; } }
 
-			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td bgcolor="'.$group_bg.'">'.$grouping.' '.$grouping_unit.'</td><td><a href="?page=batches_stats&switch='. $row['bid'] .'&act='.$switch_act.'" title="Change accept/reject status"><i class="fa '.$icon.' fa-fw"></i></a></td></tr>';
+			# Range unit name
+			$sqlx = "SELECT * FROM inv_units WHERE id = '$grouping_unit'";
+			$resultx = mysqli_query($link, $sqlx);
+			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $range_unit = $rowx['name']; } }
+
+			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td bgcolor="'.$group_bg.'">'.$grouping.' '.$grouping_unit.'</td><td bgcolor="'.$group_bg.'">'.$range.' '.$range_unit.'</td><td><a href="?page=batches_stats&switch='. $row['bid'] .'&act='.$switch_act.'" title="Change accept/reject status"><i class="fa '.$icon.' fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';
