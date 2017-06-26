@@ -119,7 +119,7 @@
 					<input class="form-control" type="number" autocomplete="off" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="max-trim"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="max-reload"> &nbsp; <input class="form-control" type="text" autocomplete="off" placeholder="" value="" name="details">
 				</div>
 				<div class="form-group">
-					<label>Brass inventory location</label>
+					<label>Shell inventory location</label>
 					<select class="form-control" name="inventory-loc">
 					<option value="0">Ignore / Not in inventory</option>
 					<?php
