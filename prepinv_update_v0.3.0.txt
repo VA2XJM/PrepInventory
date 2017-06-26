@@ -1,8 +1,10 @@
 # Execute the following SQL command to update your database.
 
 # Update to V0.3.0 from V0.3.0a
+# No update is available before V0.3.0. Sorry for those who need to start again.
 
 ALTER TABLE `reloading_batches` ADD `test_distance` INT(5) NULL DEFAULT NULL AFTER `test_grouping_unit`, ADD `test_distance_unit` INT(16) NULL DEFAULT NULL AFTER `test_distance`;
 ALTER TABLE `reloading_batches` CHANGE `test_grouping` `test_grouping` DECIMAL(10,3) NULL DEFAULT NULL;
 ALTER TABLE `reloading_batches` CHANGE `powder_charge` `powder_charge` DECIMAL(5,3) NOT NULL;
 ALTER TABLE `reloading_data` CHANGE `powder_min` `powder_min` DECIMAL(5,3) NOT NULL, CHANGE `powder_max` `powder_max` DECIMAL(5,3) NOT NULL, CHANGE `oal_max` `oal_max` DECIMAL(5,3) NOT NULL, CHANGE `case_length_max` `case_length_max` DECIMAL(5,3) NOT NULL;
+ALTER TABLE `reloading_data` CHANGE `case_length_trimto` `case_length_trimto` DECIMAL(5,3) NOT NULL;
