@@ -43,7 +43,7 @@
 	if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !isset($_GET['lot'])) {
 ?>
 
-	<div class="col-lg-8"><div class="panel panel-default">
+	<div class="col-lg-12"><div class="panel panel-default">
 		<div class="panel-heading">
 			Ammo Lot Assignation
 		</div>
@@ -74,6 +74,12 @@
 					<label>
 						<input name="trim" type="checkbox" value="1">This lot is/will be trimmed.
 						<p class="help-block">Above lots displaying an asterisc should be discarded if a new trim is necessary. If you decide to check the box and reload them once again, this shell lot will not be shown next time.</p>
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input name="inv_removal" type="checkbox" value="1" disabled>Remove reloading component from inventory
+						<p class="help-block">Check this box to remove bullets, powder and primers from inventory right now. If not checked, you will need to manually remove component from inventory.</p>
 					</label>
 				</div><br>
 				<button type="submit" class="btn btn-default" name="go" value="1">Submit</button>
