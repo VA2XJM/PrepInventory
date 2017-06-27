@@ -62,6 +62,12 @@
 					$sqlx = "SELECT *, t1.id AS `invid` FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.id = '$primer_id' ORDER BY t2.name";
 					$resultx = mysqli_query($link, $sqlx);
 					if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $primer_name = $rowx['name']; } }
+
+					# Length Unit for shell
+					$len_unit = $row['len_unit'];
+					$sqlx = "SELECT * FROM inv_units WHERE id = '$len_unit'";
+					$resultx = mysqli_query($link, $sqlx);
+					if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $len_unit = $rowx['name']; } }
 				}
 			}
 		}
@@ -84,9 +90,9 @@
 			Reloading LOT #<b><?PHP print $id; ?></b> a lot of <b><?PHP print $qty; ?></b>x <b><?PHP print $caliber_name; ?></b>.<br>
 			<br>
 			Shell Data:<br>
-			&nbsp; -> Max. Case Lenght: <?PHP print $case_length_max; ?><br>
-			&nbsp; -> Trim Case To : <?PHP print $case_length_trimto; ?><br>
-			&nbsp; -> Max. Overall Lenght: <?PHP print $oal_max; ?><br>
+			&nbsp; -> Max. Case Lenght: <?PHP print "$case_length_max $len_unit"; ?><br>
+			&nbsp; -> Trim Case To : <?PHP print "$case_length_trimto $len_unit"; ?><br>
+			&nbsp; -> Max. Overall Lenght: <?PHP print "$oal_max $len_unit"; ?><br>
 			<br>
 			Primers: <?PHP print $primer_name; ?><br>
 			Powder: <?PHP print "$charge $powder_unit OF $powder_name"; ?><br>

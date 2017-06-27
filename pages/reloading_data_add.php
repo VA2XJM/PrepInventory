@@ -348,6 +348,21 @@
 					<div class="form-inline">
 						<label>Source</label><br>
 						<input class="form-control" type="text" autocomplete="off" placeholder="Source" name="source">
+					</div>
+					<div class="form-inline">
+						<label>Measurement Unit</label><br>
+						<select class="form-control" name="len-unit">
+						<?php
+							$sql = "SELECT * FROM `inv_units` ORDER BY `name` ASC";
+							$result = mysqli_query($link, $sql);
+							if (mysqli_num_rows($result) < 1) { print ""; }
+							else {
+								while($row = mysqli_fetch_assoc($result)) {
+									print '<option value="'. $row["id"] .'">' . $row["name"] . '</option>';
+								}
+							}
+						?>
+						</select>
 					</div><br>
 					<button type="submit" class="btn btn-default" name="go" value="1">Submit</button>
 				</form>
@@ -366,8 +381,9 @@
 		$oal_max = $_POST['maxol'];
 		$clm = $_POST['mcl'];
 		$clt = $_POST['ctl'];
+		$len_unit = $_POST['len-unit'];
 
-		$sql = "INSERT INTO `reloading_data` (`caliber`, `source`, `bullet`, `primer`, `powder`, `powder_min`, `powder_max`, `oal_max`, `case_length_max`, `case_length_trimto`) VALUES ('$caliber', '$source', '$bullet', '$primer', '$powder', '$powder_min', '$powder_max', '$oal_max', '$clm', '$clt')";
+		$sql = "INSERT INTO `reloading_data` (`caliber`, `source`, `bullet`, `primer`, `powder`, `powder_min`, `powder_max`, `oal_max`, `case_length_max`, `case_length_trimto`, `len_unit`) VALUES ('$caliber', '$source', '$bullet', '$primer', '$powder', '$powder_min', '$powder_max', '$oal_max', '$clm', '$clt', '$len_unit')";
 		$result = mysqli_query($link, $sql);
 		if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">New data added.</div></div>'; }
 		else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Error while adding new data.</div></div>'; }

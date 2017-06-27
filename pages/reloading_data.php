@@ -59,7 +59,7 @@
 			$resultx = mysqli_query($link, $sqlx);
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $primer_name = $rowx['name']; } }
 
-			print '<tr><td>'.$row['name'].'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td><a href="?page=data&delete='. $row['dataid'] .'"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			print '<tr><td>'.$row['name'].'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td><a href="?page=data_edit&id='. $row['dataid'] .'"><i class="fa fa-wrench fa-fw"></i></a> <a href="?page=data&delete='. $row['dataid'] .'"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';

@@ -8,3 +8,4 @@ ALTER TABLE `reloading_batches` CHANGE `test_grouping` `test_grouping` DECIMAL(1
 ALTER TABLE `reloading_batches` CHANGE `powder_charge` `powder_charge` DECIMAL(5,3) NOT NULL;
 ALTER TABLE `reloading_data` CHANGE `powder_min` `powder_min` DECIMAL(5,3) NOT NULL, CHANGE `powder_max` `powder_max` DECIMAL(5,3) NOT NULL, CHANGE `oal_max` `oal_max` DECIMAL(5,3) NOT NULL, CHANGE `case_length_max` `case_length_max` DECIMAL(5,3) NOT NULL;
 ALTER TABLE `reloading_data` CHANGE `case_length_trimto` `case_length_trimto` DECIMAL(5,3) NOT NULL;
+ALTER TABLE `reloading_data` ADD `len_unit` INT(16) NOT NULL AFTER `case_length_trimto`;
