@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 07, 2017 at 01:47 AM
+-- Generation Time: Jun 26, 2017 at 01:23 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.5.28
 
@@ -163,6 +163,73 @@ CREATE TABLE IF NOT EXISTS `inv_units` (
   `name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reloading_batches`
+--
+
+CREATE TABLE IF NOT EXISTS `reloading_batches` (
+  `id` int(16) NOT NULL,
+  `caliber` int(16) NOT NULL,
+  `data` int(16) NOT NULL,
+  `lot` int(16) DEFAULT NULL,
+  `powder_charge` float NOT NULL,
+  `trim` int(1) DEFAULT '0',
+  `test_grouping` float DEFAULT NULL,
+  `test_grouping_unit` int(16) DEFAULT NULL,
+  `test_result` int(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reloading_calibers`
+--
+
+CREATE TABLE IF NOT EXISTS `reloading_calibers` (
+  `id` int(16) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reloading_data`
+--
+
+CREATE TABLE IF NOT EXISTS `reloading_data` (
+  `id` int(16) NOT NULL,
+  `caliber` int(16) NOT NULL,
+  `source` text NOT NULL,
+  `bullet` int(24) NOT NULL,
+  `primer` int(24) NOT NULL,
+  `powder` int(24) NOT NULL,
+  `powder_min` float NOT NULL,
+  `powder_max` float NOT NULL,
+  `oal_max` float NOT NULL,
+  `case_length_max` float NOT NULL,
+  `case_length_trimto` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reloading_shell_lots`
+--
+
+CREATE TABLE IF NOT EXISTS `reloading_shell_lots` (
+  `id` int(16) NOT NULL,
+  `caliber` int(16) NOT NULL,
+  `trim` int(2) NOT NULL DEFAULT '0',
+  `trim_max` int(2) NOT NULL DEFAULT '5',
+  `reload` int(2) NOT NULL DEFAULT '0',
+  `reload_max` int(2) NOT NULL DEFAULT '0',
+  `qty` decimal(6,2) NOT NULL DEFAULT '1.00',
+  `discarded` int(1) NOT NULL DEFAULT '0',
+  `details` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
@@ -228,6 +295,30 @@ ALTER TABLE `inv_units`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `reloading_batches`
+--
+ALTER TABLE `reloading_batches`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reloading_calibers`
+--
+ALTER TABLE `reloading_calibers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reloading_data`
+--
+ALTER TABLE `reloading_data`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reloading_shell_lots`
+--
+ALTER TABLE `reloading_shell_lots`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -280,6 +371,26 @@ ALTER TABLE `inv_log`
 -- AUTO_INCREMENT for table `inv_units`
 --
 ALTER TABLE `inv_units`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `reloading_batches`
+--
+ALTER TABLE `reloading_batches`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `reloading_calibers`
+--
+ALTER TABLE `reloading_calibers`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `reloading_data`
+--
+ALTER TABLE `reloading_data`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `reloading_shell_lots`
+--
+ALTER TABLE `reloading_shell_lots`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

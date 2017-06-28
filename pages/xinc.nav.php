@@ -172,6 +172,15 @@
 							<!-- /.nav-second-level -->
 						</li>
 						<li>
+							<a href="#"><i class="fa fa-terminal fa-fw"></i> Applications<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="reloading.php">Ammo Reloading</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+						<li>
 							<a href="#"><i class="fa fa-support fa-fw"></i> Help & About<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
