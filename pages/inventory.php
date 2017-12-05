@@ -88,25 +88,25 @@
 											else {
 												while($row = mysqli_fetch_assoc($result)) {
 													# Level 1 locations
-													print '<tr><td><img src="'. $row['icon'] .'" class="icon"> ' . $row["name"] . ' </td><td style="width:200px;"></td></tr>';
+													print '<tr><td><img src="'. $row['icon'] .'" class="icon"> ' . $row["name"] . ' </td><td colspan="2" style="width:100px;"></td></tr>';
 													$sql2 = "SELECT * FROM `inv_locations_2` WHERE parent = '". $row['id'] ."' ORDER BY `name` ASC";
 													$result2 = mysqli_query($link, $sql2);
 													if (mysqli_num_rows($result2) > 0) {
 														while($row2 = mysqli_fetch_assoc($result2)) {
 															# Level 2 locations
-															print '<tr><td>&emsp; <img src="'. $row2['icon'] .'" class="icon"> ' . $row2["name"] . ' </td><td></td></tr>';
+															print '<tr><td>&emsp; <img src="'. $row2['icon'] .'" class="icon"> ' . $row2["name"] . ' </td><td colspan="2"></td></tr>';
 															$sql3 = "SELECT * FROM `inv_locations_3` WHERE parent = '". $row2['id'] ."' ORDER BY `name` ASC";
 															$result3 = mysqli_query($link, $sql3);
 															if (mysqli_num_rows($result3) > 0) {
 																while($row3 = mysqli_fetch_assoc($result3)) {
 																	# Level 3 locations
-																	print '<tr><td>&emsp;&emsp; <img src="'. $row3['icon'] .'" class="icon"> ' . $row3["name"] . ' </td><td></td></tr>';
+																	print '<tr><td>&emsp;&emsp; <img src="'. $row3['icon'] .'" class="icon"> ' . $row3["name"] . ' </td><td colspan="2"></td></tr>';
 																	$sql4 = "SELECT * FROM `inv_locations_4` WHERE parent = '". $row3['id'] ."' ORDER BY `name` ASC";
 																	$result4 = mysqli_query($link, $sql4);
 																	if (mysqli_num_rows($result4) > 0) {
 																		while($row4 = mysqli_fetch_assoc($result4)) {
 																			# Level 4 locations
-																			print '<tr><td>&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' </td><td></td></tr>';
+																			print '<tr><td>&emsp;&emsp;&emsp; <img src="'. $row4['icon'] .'" class="icon"> ' . $row4["name"] . ' </td><td colspan="2"></td></tr>';
 																			# Items for fourth level
 																			$loc = '4-'. $row4['id'];
 																			$sqlx = "SELECT *, t1.id AS `invid` FROM inventory t1 LEFT JOIN inv_items t2 ON t1.item = t2.id WHERE t1.location = '$loc' ORDER BY t2.name";
@@ -121,7 +121,7 @@
 																					elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 																					elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
 																					else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
-																					print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																					print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td align="right">'.$rowx['qty'].'/'.$rowx['qty_max'].'</td><td width="250px"><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																				}
 																			}
 																			# /Items			
@@ -141,7 +141,7 @@
 																			elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 																			elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
 																			else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
-																			print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																			print '<tr><td>&emsp;&emsp;&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td align="right">'.$rowx['qty'].'/'.$rowx['qty_max'].'</td><td width="250px"><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																		}
 																	}
 																	# /Items
@@ -161,7 +161,7 @@
 																	elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 																	elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
 																	else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
-																	print '<tr><td>&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+																	print '<tr><td>&emsp;&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td align="right">'.$rowx['qty'].'/'.$rowx['qty_max'].'</td><td width="250px"><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 																}
 															}
 															# /Items
@@ -181,11 +181,11 @@
 															elseif ($percent < '90') { $pclevel = 'progress-bar-info'; }
 															elseif ($percent < '101') { $pclevel = 'progress-bar-success'; }
 															else { $pclevel = 'progress-bar-success'; $pcact = ' progress-striped active'; }
-															print '<tr><td>&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
+															print '<tr><td>&emsp; <img src="'. $rowx['icon'] .'" class="icon"> <a href="inventory_details.php?id='. $rowx['invid'] .'">' . $rowx["name"] . '</a></td><td align="right">'.$rowx['qty'].'/'.$rowx['qty_max'].'</td><td width="250px"><div class="progress'. $pcact .'"><div class="progress-bar '. $pclevel .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%"></div></div></td></tr>';
 														}
 													}
 													# /Items
-													print '<tr><td></td><td></td></tr>';
+													print '<tr><td></td><td colspan="2"></td></tr>';
 												}
 											}
 										?>
