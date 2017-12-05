@@ -75,8 +75,8 @@
 						<i class="fa fa-star fa-fw"></i>  <i class="fa fa-caret-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-user">
-						<li><a href="admin_invlog.php"><i class="fa fa-area-chart fa-fw"></i> Inventory Log</a>
-						</li>
+						<li><a href="admin_invlog.php"><i class="fa fa-area-chart fa-fw"></i> Inventory Log</a></li>
+						<li><a href="admin_users.php"><i class="fa fa-user fa-fw"></i> User Management</a></li>
 					</ul>
 					<!-- /.dropdown-user -->
 				</li>
