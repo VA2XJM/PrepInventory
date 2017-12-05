@@ -105,7 +105,7 @@
 
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
-					<ul class="nav" id="side-menu">
+					<ul class="nav form-inline" id="side-menu">
 						<li class="sidebar-search">
 							<div class="input-group custom-search-form">
 								<form role="form" method="post" action="search.php">
