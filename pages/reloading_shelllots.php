@@ -108,15 +108,23 @@
 						if (mysqli_num_rows($result) < 1) { print ""; }
 						else {
 							while($row = mysqli_fetch_assoc($result)) {
-								print '<option value="'. $row['id'] .'">' . $row['name'] . '</option>';
+								if (isset($_POST['caliber']) && $_POST['caliber'] == $row['id']) { $cselected = 'selected'; }
+								else { $cselected = ''; }
+								print '<option value="'. $row['id'] .'" '.$cselected.'>' . $row['name'] . '</option>';
 							}
 						}
 					?>
 					</select>
 				</div>
 				<div class="form-inline">
+					<?PHP
+						$qty = isset($_POST['qty']) ? $_POST['qty'] : 0;
+						$max_trim = isset($_POST['max-trim']) ? $_POST['max-trim'] : 1;
+						$max_reload = isset($_POST['max-reload']) ? $_POST['max-reload'] : 1;
+						$details = isset($_POST['details']) ? $_POST['details'] : '';
+					?>
 					<label>Quantity &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; Max trim allowed &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; Max reload allowed &emsp;&emsp;&emsp;&emsp; Details/Notes</label><br>
-					<input class="form-control" type="number" autocomplete="off" placeholder="0" name="qty" value="0"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="max-trim"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="1" name="max-reload"> &nbsp; <input class="form-control" type="text" autocomplete="off" placeholder="" value="" name="details">
+					<input class="form-control" type="number" autocomplete="off" placeholder="0" name="qty" value="<?PHP print $qty; ?>"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="<?PHP print $max_trim; ?>" name="max-trim"> &nbsp; <input class="form-control" type="number" autocomplete="off" placeholder="1" value="<?PHP print $max_reload; ?>" name="max-reload"> &nbsp; <input class="form-control" type="text" autocomplete="off" placeholder="" value="<?PHP print $details; ?>" name="details">
 				</div>
 				<div class="form-group">
 					<label>Shell inventory location</label>
