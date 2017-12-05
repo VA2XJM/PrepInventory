@@ -43,7 +43,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?PHP print $g_title; ?></title>
+    <title>PrepInventory</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
