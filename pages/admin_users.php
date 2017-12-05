@@ -83,7 +83,7 @@
 			if  ($disabled == '2') { $delete = ''; }
 			else { $delete = '<a href="admin_users.php?id='.$uid.'&action=delete" title="Delete this user" onclick="return confirm(\'Are you certain you wish to delete this user?\')"><i class="fa fa-times fa-2x"></i></a>'; }
 				
-			$data .= '<tr><td>'.$username.'</td> <td>'.$email.'</td> <td>'.$namef.' '.$namel.'</td> <td>'.$location.'</td> <td>'.$rating.'</td> <td>'.$role.'</td> <td>'.date("Y-m-d H:i:s", $lastact).'<br><small>'.$lastactnote.'</small></td> <td>'.$toggle.' &nbsp; '.$delete.'</td></tr>';
+			$data .= '<tr><td>'.$username.'</td> <td>'.$namef.' '.$namel.'</td> <td>'.$email.'</td> <td>'.$location.'</td> <td>'.$rating.'</td> <td>'.$role.'</td> <td>'.date("Y-m-d H:i:s", $lastact).'<br><small>'.$lastactnote.'</small></td> <td>'.$toggle.' &nbsp; '.$delete.'</td></tr>';
 		}
 	}
 ?>
@@ -197,7 +197,7 @@
 									<form role="form" method="post">
 										<div class="form-group">
 											<label>New User Details.</label>
-											<p class="form-inline"><input class="form-control" placeholder="Username" name="username" value="<?PHP if (!empty($_POST['username'])) { print $_POST['username']; } ?>"> &nbsp; <input class="form-control" placeholder="E-Mail" name="email" value="<?PHP if (!empty($_POST['email'])) { print $_POST['email']; } ?>"> &nbsp; <select class="form-control" name="role"><option value="user" <?PHP if (!empty($p_role) && $p_role == 'user') { print 'selected="selected"'; } ?>>User</option><option value="vip" <?PHP if (!empty($p_role) && $p_role == 'vip') { print 'selected="selected"'; } ?>>VIP</option><option value="manager" <?PHP if (!empty($p_role) && $p_role == 'manager') { print 'selected="selected"'; } ?>>Manager</option><option value="admin" <?PHP if (!empty($p_role) && $p_role == 'admin') { print 'selected="selected"'; } ?>>Admin</option><option value="provider" <?PHP if (!empty($p_role) && $p_role == 'provider') { print 'selected="selected"'; } ?>>Provider</option></select></p>
+											<p class="form-inline"><input class="form-control" placeholder="Username" name="username" value="<?PHP if (!empty($_POST['username'])) { print $_POST['username']; } ?>"> &nbsp; <input class="form-control" placeholder="E-Mail" name="email" value="<?PHP if (!empty($_POST['email'])) { print $_POST['email']; } ?>"> &nbsp; <select class="form-control" name="role"><option value="user" <?PHP if (!empty($p_role) && $p_role == 'user') { print 'selected="selected"'; } ?>>User</option><option value="admin" <?PHP if (!empty($p_role) && $p_role == 'admin') { print 'selected="selected"'; } ?>>Admin</option></select></p>
 										</div>
 										<button type="submit" class="btn btn-default">Submit</button>
 									</form>
