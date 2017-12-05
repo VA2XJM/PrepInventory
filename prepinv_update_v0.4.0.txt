@@ -43,7 +43,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `username`, `password`, `email`, `name_first`, `name_last`, `location`, `rating`, `role`, `last_activity`, `last_activity_note`, `disabled`, `deleted`) VALUES
-(1, 'admin', 'password', 'test@sample.com', NULL, NULL, NULL, 0, 'admin', 1, NULL, 0, 0);
+(1, 'admin', 'password', 'test@sample.com', NULL, NULL, NULL, 0, 'admin', 1, NULL, 2, 2);
 
 --
 -- Indexes for dumped tables
