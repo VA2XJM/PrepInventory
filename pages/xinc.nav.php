@@ -130,6 +130,9 @@
 									<a href="inventory_shopping.php">Shopping List</a>
 								</li>
 								<li>
+									<a href="inventory_evaluator.php">Consumption Evaluator</a>
+								</li>
+								<li>
 									<a href="inventory_add.php">Add item in inventory</a>
 								</li>
 							</ul>
@@ -157,10 +160,22 @@
 							<a href="#"><i class="fa fa-files-o fa-fw"></i> Paper Forms<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
+									<a href="paperforms_inventory.php">Printable Inventory</a>
+								</li>
+								<li>
 									<a href="paperforms_maninvpickup.php">Manual Inventory Pick List</a>
 								</li>
 								<li>
 									<a href="paperforms_maninvrev.php">Manual Inventory Revision List</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-terminal fa-fw"></i> Applications<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="reloading.php">Ammo Reloading</a>
 								</li>
 							</ul>
 							<!-- /.nav-second-level -->
