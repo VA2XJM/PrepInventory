@@ -7,6 +7,7 @@
 		$_SESSION['uid'] = '';
 		$_SESSION['username'] = '';
 		session_destroy();
+		$zlastact = "Logged out!";
 	}
 
 	# If username and password is provided, identity is validated.

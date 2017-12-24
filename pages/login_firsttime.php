@@ -17,8 +17,8 @@
 					if (empty($np1) || empty($np2)) { $error = 3; }
 					elseif ($np1 !== $np2) { $error = 4; }
 					else {
-						$lastact = time(); $lastactnote = 'First Login';
-						$sql = "UPDATE `users` SET `password` = '$np1', `last_activity` = '$lastact', `last_activity_note` = '$lastactnote' WHERE `uid`='$userid'";
+						$lastact = time(); $zlastact = 'First Login';
+						$sql = "UPDATE `users` SET `password` = '$np1', `last_activity` = '$lastact', `last_activity_note` = '$zlastact' WHERE `uid`='$userid'";
 						$result = mysqli_query($link, $sql);
 						if ($result) { $_SESSION['notice'] = '<div class="panel panel-green"><div class="panel-heading">Welcome! Your new password is set.</div></div>'; header('location:index.php'); }
 						else { $error = 5; }
