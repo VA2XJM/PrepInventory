@@ -87,7 +87,7 @@
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">
-			Reloading LOT #<b><?PHP print $id; ?></b> a lot of <b><?PHP print $qty; ?></b>x <b><?PHP print $caliber_name; ?></b>.<br>
+			Reloading BATCH #<b><?PHP print $id; ?></b> a lot of <b><?PHP print $qty; ?></b>x <b><?PHP print $caliber_name; ?></b>.<br>
 			<br>
 			Shell Data:<br>
 			&nbsp; -> Max. Case Lenght: <?PHP print "$case_length_max $len_unit"; ?><br>
