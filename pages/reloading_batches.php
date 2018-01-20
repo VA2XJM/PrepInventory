@@ -80,5 +80,5 @@
 			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td>'.$slink.' <a href="?page=batches&delete='. $row['bid'] .'" title="Delete"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
-	print '</table>';
+	print '</table> <br><br>&nbsp;';
 ?>
