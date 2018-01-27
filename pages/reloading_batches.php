@@ -77,7 +77,7 @@
 			if (!is_null($lot)) { $slink = '<a href="?page=batches_reload&id='. $row['bid'] .'" title="See reloading data"><i class="fa fa-magic fa-fw"></i></a><a href="?page=batches_results&id='. $row['bid'] .'" title="Input grouping results"><i class="fa fa-crosshairs fa-fw"></i></a>'; }
 			else { $slink = '<a href="?page=batches_assignlot&id='. $row['bid'] .'" title="Assign an ammo lot to this batch"><i class="fa fa-edit fa-fw"></i></a>'; }
 
-			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td>'.$slink.' <a href="?page=batches&delete='. $row['bid'] .'" title="Delete"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td>'.$slink.' <a href="?page=batches&delete='. $row['bid'] .'" title="Delete" onclick="return confirm(\'Are you certain you wish to delete this batch?\')"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table> <br><br>&nbsp;';

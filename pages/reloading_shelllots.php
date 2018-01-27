@@ -86,7 +86,7 @@
 			if ($row['reload'] >= $row['reload_max']) { $reload_color = "#FF0000"; }
 			$trim_color = "";
 			if ($row['trim'] >= $row['trim_max']) { $trim_color = "#FF0000"; }
-			print '<tr><td>'.$row['calibername'].' ('.$row['qty'].')</td><td>'.$row['lotid'].'</td><td bgcolor="'.$reload_color.'">'.$row['reload'].' / '.$row['reload_max'].'</td><td bgcolor="'.$trim_color.'">'.$row['trim'].' / '.$row['trim_max'].'</td><td>'.$row['details'].'</td><td><a href="?page=shelllots&delete='. $row['lotid'] .'"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			print '<tr><td>'.$row['calibername'].' ('.$row['qty'].')</td><td>'.$row['lotid'].'</td><td bgcolor="'.$reload_color.'">'.$row['reload'].' / '.$row['reload_max'].'</td><td bgcolor="'.$trim_color.'">'.$row['trim'].' / '.$row['trim_max'].'</td><td>'.$row['details'].'</td><td><a href="?page=shelllots&delete='. $row['lotid'] .'" onclick="return confirm(\'Are you certain you wish to delete this shell lot?\')"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';
