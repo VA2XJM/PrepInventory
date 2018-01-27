@@ -30,6 +30,7 @@
 					$sqlx = "SELECT * FROM reloading_shell_lots WHERE id = '$lot'";
 					$resultx = mysqli_query($link, $sqlx);
 					if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $qty = $rowx['qty']; } }
+					else { $qty = '-'; }
 
 					# Reloading Data:
 					$case_length_max = $row['case_length_max'];
