@@ -55,9 +55,12 @@
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $primer_name = $rowx['name']; } }
 
 			# Shell lot qty
-			$sqlx = "SELECT * FROM reloading_shell_lots WHERE id = '$lot'";
-			$resultx = mysqli_query($link, $sqlx);
-			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $shells = $rowx['qty']; } }
+			if ($lot > 0) {
+				$sqlx = "SELECT * FROM reloading_shell_lots WHERE id = '$lot'";
+				$resultx = mysqli_query($link, $sqlx);
+				if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $shells = $rowx['qty']; } }
+			}
+			else { $shells = '---'; }
 
 			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td>'.$shells.'</td></tr>';
 		}
