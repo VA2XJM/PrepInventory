@@ -58,7 +58,7 @@
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
-			print '<tr><td>'.$row['name'].' <a href="?page=calibers&delete='. $row['id'] .'"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
+			print '<tr><td>'.$row['name'].' <a href="?page=calibers&delete='. $row['id'] .'" onclick="return confirm(\'Are you certain you wish to delete this caliber?\')"><i class="fa fa-minus-square fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';

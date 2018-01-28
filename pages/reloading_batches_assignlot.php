@@ -59,6 +59,7 @@
 				<div class="form-inline">
 					Assign a <b><?PHP print $caliber_name; ?></b> ammo lot to the batch <b><?PHP print $id; ?></b>.<br>
 					<select class="form-control" name="lot">
+					<option value="0">No lot assigned</option>
 					<?php
 						$sql = "SELECT * FROM `reloading_shell_lots` WHERE `caliber` = '$caliber' AND `discarded` = '0' AND `reload` < `reload_max` AND `trim` <= `trim_max` ORDER BY `id` ASC";
 						$result = mysqli_query($link, $sql);
@@ -100,14 +101,14 @@
 
 		if (is_numeric($_POST['lot'])) {
 			$sql = "UPDATE `reloading_batches` SET `lot`='$lot' WHERE id = '$id'"; $result = mysqli_query($link, $sql);
-			$sql = "UPDATE `reloading_shell_lots` SET `reload`=reload+1 WHERE id = '$lot'"; $result = mysqli_query($link, $sql);
+			if ($_POST['lot'] > 0) { $sql = "UPDATE `reloading_shell_lots` SET `reload`=reload+1 WHERE id = '$lot'"; $result = mysqli_query($link, $sql); }
 
-			if (isset($_POST['trim'])) { 
+			if (isset($_POST['trim']) && $_POST['lot'] > 0) { 
 				$sql = "UPDATE `reloading_batches` SET `trim`='1' WHERE id = '$id'"; $result = mysqli_query($link, $sql); 
 				$sql = "UPDATE `reloading_shell_lots` SET `trim`=trim+1 WHERE id = '$lot'"; $result = mysqli_query($link, $sql);
 			}
 
-			if (isset($_POST['inv_removal'])) {
+			if (isset($_POST['inv_removal']) && $_POST['lot'] > 0) {
 				# Get shells # in lot
 				$sqlz = "SELECT * FROM reloading_shell_lots WHERE id = '$lot'";
 				$resultz = mysqli_query($link, $sqlz);
@@ -151,6 +152,8 @@
 
 			if ($result) {	$notice .= '<div class="panel panel-success"><div class="panel-heading">Batch has been assigned.</div></div>'; }
 			else { $notice .= '<div class="panel panel-danger"><div class="panel-heading">Error while updating batch.</div></div>'; }
+
+			if ($_POST['lot'] == 0) { $notice .= '<div class="panel panel-danger"><div class="panel-heading">Remove reloading components from inventory manually.</div></div>'; }
 		}
 		else { $notice = '<div class="panel panel-danger"><div class="panel-heading">Numerical value required.</div></div>'; }
 		print $notice;

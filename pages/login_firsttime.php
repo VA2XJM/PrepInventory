@@ -2,31 +2,27 @@
 	session_start();
 	include('xinc.config.php');
 
-	# If session var UID contain a value, we assume the user wished to log out.
-	if (!empty($_SESSION['uid'])) {
-		$_SESSION['uid'] = '';
-		$_SESSION['username'] = '';
-		session_destroy();
-		$zlastact = "Logged out!";
-	}
-
 	# If username and password is provided, identity is validated.
-	if (!empty($_POST['username']) && !empty($_POST['password'])) {
-		$username = $_POST['username'];
-		$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+	if (!empty($_POST['submit'])) {
+		$userid = $_SESSION['id'];
+		$sql = "SELECT * FROM `users` WHERE `uid` = '$userid'";
 		$result = mysqli_query($link, $sql);
 		if (mysqli_num_rows($result) < 1) { $error = 1; }
 		else {
 			while($row = mysqli_fetch_assoc($result)) {
-				if ($row['password'] !== $_POST['password']) { $error = 1; }
-				elseif ($row['disabled'] == '1') { $error = 2; }
+				if ($row['password'] !== $_POST['temppass']) { $error = 2; }
 				else {
-					$_SESSION['username'] = $_POST['username'];
-					$_SESSION['role'] = $row['role'];
-					$_SESSION['name'] = $row['name_first'] .' '. $row['name_last'];
-					$_SESSION['uid'] = $row['uid'];
-					if ($row['last_activity'] > 0) { header('location:index.php'); }
-					else { header('location:login_firsttime.php'); }
+					$np1 = $_POST['np1'];
+					$np2 = $_POST['np2'];
+					if (empty($np1) || empty($np2)) { $error = 3; }
+					elseif ($np1 !== $np2) { $error = 4; }
+					else {
+						$lastact = time(); $zlastact = 'First Login';
+						$sql = "UPDATE `users` SET `password` = '$np1', `last_activity` = '$lastact', `last_activity_note` = '$zlastact' WHERE `uid`='$userid'";
+						$result = mysqli_query($link, $sql);
+						if ($result) { $_SESSION['notice'] = '<div class="panel panel-green"><div class="panel-heading">Welcome! Your new password is set.</div></div>'; header('location:index.php'); }
+						else { $error = 5; }
+					}
 				}
 			}
 		}
@@ -74,27 +70,28 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">Change your password</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="login.php" method="post">
+                        <form role="form" action="login_firsttime.php" method="post">
                             <fieldset>
 				<?PHP
 					if (!empty($error) && $error == '1') { print '<div class="form-group"><span style="color: #FF0000;">Wrong username or password.</span></div>'; }
-					elseif (!empty($error) && $error == '2') { print '<div class="form-group"><span style="color: #FF0000;">Your account has been suspended.</span></div>'; }
+					elseif (!empty($error) && $error == '2') { print '<div class="form-group"><span style="color: #FF0000;">Temporary password do not match.</span></div>'; }
+					elseif (!empty($error) && $error == '3') { print '<div class="form-group"><span style="color: #FF0000;">New password is missing.</span></div>'; }
+					elseif (!empty($error) && $error == '4') { print '<div class="form-group"><span style="color: #FF0000;">New password do not match.</span></div>'; }
+					elseif (!empty($error) && $error == '5') { print '<div class="form-group"><span style="color: #FF0000;">Error.</span></div>'; }
 				?>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
+                                    <input class="form-control" placeholder="Temporary Password" name="temppass" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="New Password" name="np1" type="password" value="">
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Repeat New Password" name="np2" type="password" value="">
                                 </div>
-                                <input type="submit" value="Login">
+                                <input type="submit" name="submit" value="Continue">
                             </fieldset>
                         </form>
                     </div>

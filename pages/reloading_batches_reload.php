@@ -30,6 +30,7 @@
 					$sqlx = "SELECT * FROM reloading_shell_lots WHERE id = '$lot'";
 					$resultx = mysqli_query($link, $sqlx);
 					if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $qty = $rowx['qty']; } }
+					else { $qty = '-'; }
 
 					# Reloading Data:
 					$case_length_max = $row['case_length_max'];
@@ -87,7 +88,7 @@
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">
-			Reloading LOT #<b><?PHP print $id; ?></b> a lot of <b><?PHP print $qty; ?></b>x <b><?PHP print $caliber_name; ?></b>.<br>
+			Reloading BATCH #<b><?PHP print $id; ?></b> a lot of <b><?PHP print $qty; ?></b>x <b><?PHP print $caliber_name; ?></b>.<br>
 			<br>
 			Shell Data:<br>
 			&nbsp; -> Max. Case Lenght: <?PHP print "$case_length_max $len_unit"; ?><br>
