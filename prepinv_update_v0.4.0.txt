@@ -1,0 +1,78 @@
+# Execute the following SQL command to update your database.
+
+# Update to V0.4.0 from V0.3.0
+# If you update from an older version, execute previous update file first.
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `nid` int(24) NOT NULL,
+  `uid` int(16) DEFAULT NULL,
+  `text` text,
+  `time` int(16) NOT NULL DEFAULT '0',
+  `readed` int(1) NOT NULL DEFAULT '0',
+  `deleted` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `uid` int(24) NOT NULL,
+  `username` varchar(128) NOT NULL,
+  `password` varchar(164) NOT NULL,
+  `email` varchar(164) NOT NULL,
+  `name_first` varchar(128) DEFAULT NULL,
+  `name_last` varchar(128) DEFAULT NULL,
+  `location` varchar(128) DEFAULT NULL,
+  `rating` int(3) NOT NULL DEFAULT '0',
+  `role` varchar(24) NOT NULL DEFAULT 'user',
+  `last_activity` int(16) NOT NULL DEFAULT '0',
+  `last_activity_note` varchar(128) DEFAULT NULL,
+  `disabled` int(1) NOT NULL DEFAULT '0',
+  `deleted` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`uid`, `username`, `password`, `email`, `name_first`, `name_last`, `location`, `rating`, `role`, `last_activity`, `last_activity_note`, `disabled`, `deleted`) VALUES
+(1, 'admin', 'password', 'test@sample.com', NULL, NULL, NULL, 0, 'admin', 1, NULL, 2, 2);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`nid`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `nid` int(24) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `uid` int(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;

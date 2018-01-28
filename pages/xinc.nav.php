@@ -75,8 +75,8 @@
 						<i class="fa fa-star fa-fw"></i>  <i class="fa fa-caret-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-user">
-						<li><a href="admin_invlog.php"><i class="fa fa-area-chart fa-fw"></i> Inventory Log</a>
-						</li>
+						<li><a href="admin_invlog.php"><i class="fa fa-area-chart fa-fw"></i> Inventory Log</a></li>
+						<?PHP if ($conf['multiuser']['status'] == '0') { print '<li><a href="admin_users.php"><i class="fa fa-user fa-fw"></i> User Management</a></li>'; } ?>
 					</ul>
 					<!-- /.dropdown-user -->
 				</li>
@@ -105,14 +105,16 @@
 
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
-					<ul class="nav" id="side-menu">
+					<ul class="nav form-inline" id="side-menu">
 						<li class="sidebar-search">
 							<div class="input-group custom-search-form">
-								<input type="text" class="form-control" placeholder="Search...">
-								<span class="input-group-btn">
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-search"></i>
-								</button>
+								<form role="form" method="post" action="search.php">
+									<input type="text" class="form-control" name="search" placeholder="Search...">
+									<span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+										<i class="fa fa-search"></i>
+									</button>
+								</form>
 							</span>
 							</div>
 							<!-- /input-group -->
