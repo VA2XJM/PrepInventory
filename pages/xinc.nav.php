@@ -76,7 +76,7 @@
 					</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="admin_invlog.php"><i class="fa fa-area-chart fa-fw"></i> Inventory Log</a></li>
-						<li><a href="admin_users.php"><i class="fa fa-user fa-fw"></i> User Management</a></li>
+						<?PHP if ($conf['multiuser']['status'] == '0') { print '<li><a href="admin_users.php"><i class="fa fa-user fa-fw"></i> User Management</a></li>'; } ?>
 					</ul>
 					<!-- /.dropdown-user -->
 				</li>
