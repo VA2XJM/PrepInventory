@@ -26,6 +26,15 @@
 			else { $notice = '<div class="panel panel-red"><div class="panel-heading">Error: Couldn\'t update the user.</div></div>'; }
 		}
 
+		# Reset Password
+		if ($action == 'reset') {
+			$g_password = substr(md5(mt_rand()), 0, 8);
+			$sql = "UPDATE `users` SET `password` = '$g_password' WHERE `uid`='$userid'";
+			$result = mysqli_query($link, $sql);
+			if ($result) { $notice = '<div class="panel panel-green"><div class="panel-heading">User password has been reset: <b>'.$g_password.'</b></div></div>'; }
+			else { $notice = '<div class="panel panel-red"><div class="panel-heading">Error: Couldn\'t reset the user password.</div></div>'; }
+		}
+
 		# Delete user
 		if ($action == 'delete') {
 			# Execute MySQL. If there is not error show green panel and notification.
@@ -82,8 +91,12 @@
 			# Delete a user
 			if  ($disabled == '2') { $delete = ''; }
 			else { $delete = '<a href="admin_users.php?id='.$uid.'&action=delete" title="Delete this user" onclick="return confirm(\'Are you certain you wish to delete this user?\')"><i class="fa fa-times fa-2x"></i></a>'; }
-				
-			$data .= '<tr><td>'.$username.'</td> <td>'.$namef.' '.$namel.'</td> <td>'.$email.'</td> <td>'.$location.'</td> <td>'.$rating.'</td> <td>'.$role.'</td> <td>'.date("Y-m-d H:i:s", $lastact).'<br><small>'.$lastactnote.'</small></td> <td>'.$toggle.' &nbsp; '.$delete.'</td></tr>';
+			
+			# Reset password
+			if  ($disabled == '2') { $chgpass = ''; }
+			else { $chgpass = '<a href="admin_users.php?id='.$uid.'&action=reset" title="Reset this user password" onclick="return confirm(\'Are you certain you wish to reset this user password?\')"><i class="fa fa-key fa-2x"></i></a>'; }
+	
+			$data .= '<tr><td>'.$username.'</td> <td>'.$namef.' '.$namel.'</td> <td>'.$email.'</td> <td>'.$location.'</td> <td>'.$rating.'</td> <td>'.$role.'</td> <td>'.date("Y-m-d H:i:s", $lastact).'<br><small>'.$lastactnote.'</small></td> <td>'.$toggle.' &nbsp; '.$delete.' &nbsp; '.$chgpass.'</td></tr>';
 		}
 	}
 ?>
