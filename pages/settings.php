@@ -9,6 +9,23 @@
 		header('location:login.php');
 		die();
 	}
+
+	#
+	## Password changes
+	#
+	if (isset($_POST['psw']) && isset($_POST['pswc'])) {
+		$psw = $_POST['psw'];
+		$pswc = $_POST['pswc'];
+
+		if ($psw === $pswc) {
+			$lastact = time(); $lastactnote = 'Password changed.'; $userid = $_SESSION['uid'];
+			$sql = "UPDATE `users` SET `password` = '$psw', `last_activity` = '$lastact', `last_activity_note` = '$lastactnote' WHERE `uid`='$userid'";
+			$result = mysqli_query($link, $sql);
+			if ($result) { $notice = '<div class="panel panel-green"><div class="panel-heading">Your new password is now set.</div></div>'; }
+			else { $notice = '<div class="panel panel-green"><div class="panel-heading">Your new password cannot be set due to a database error. Please try again.</div></div>'; }
+		}
+		else { $notice = '<div class="panel panel-red"><div class="panel-heading">Your new password do not match. Please try again.</div></div>'; }
+	}
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +87,21 @@
 			<!-- /.row -->
 			<div class="row">
 				<div class="col-lg-12">
-					###
+					<?PHP if (isset($notice)) { print $notice; } ?>
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							Change password
+						</div>
+						<div class="panel-body">
+							<form role="form" method="post">
+								<div class="form-group">
+									<label>Input your new password twice for validation, then submit.</label>
+									<p class="form-inline"><input class="form-control" type="password" name="psw"> &nbsp; <input class="form-control" type="password" name="pswc"></p>
+								</div>
+								<button type="submit" class="btn btn-default">Submit</button>
+							</form>
+						</div>
+					</div>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
