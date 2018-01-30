@@ -23,11 +23,13 @@
 		# -> now create a new database for each user. Ex: pi_username
 		# -> edit username in the database and password.
 
-	if ($conf['multiuser']['status'] == '1' && isset($_POST['username']) || isset($_SESSION['username'])) {
-		if (isset($_POST['username'])) { $dbuser = $_POST['username']; }
-		if (isset($_SESSION['username'])) { $dbuser = $_SESSION['username']; }
+	if ($conf['multiuser']['status'] == '1' ) {
+		if (isset($_POST['username']) || isset($_SESSION['username'])) {
+			if (isset($_POST['username'])) { $dbuser = $_POST['username']; }
+			if (isset($_SESSION['username'])) { $dbuser = $_SESSION['username']; }
 
-		$conf['mysql']['database'] = $conf['multiuser']['prefix'] . $dbuser;
+			$conf['mysql']['database'] = $conf['multiuser']['prefix'] . $dbuser;
+		}
 	}
 
 
