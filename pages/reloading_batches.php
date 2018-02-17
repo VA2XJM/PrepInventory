@@ -35,7 +35,7 @@
 
 	print '<br><br><a href="?page=batches_add">Create a new batch</a> - <a href="?page=batches_stats">View closed batches stats</a> - <a href="reloading_batches_print.php" target="_BLANK">Printable table</a>';
 	print '<table border="1" width="90%"><tr><th>Batch ID</th><th>Ammo Lot ID</th><th>Caliber</th><th>Bullet</th><th>Powder</th><th>Primer</th><th>Powder Charge</th><th width="20px">&nbsp;</th></tr>';
-	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NULL ORDER BY t1.id ASC";
+	$sql = "SELECT *, t1.id AS `bid` FROM reloading_batches t1 LEFT JOIN reloading_data t2 ON t1.data = t2.id WHERE test_grouping IS NULL ORDER BY t1.caliber ASC, t2.powder ASC, t1.powder_charge ASC";
 	$result = mysqli_query($link, $sql);
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
