@@ -89,7 +89,7 @@
 			$resultx = mysqli_query($link, $sqlx);
 			if (mysqli_num_rows($resultx) > 0) { while($rowx = mysqli_fetch_assoc($resultx)) { $range_unit = $rowx['name']; } }
 
-			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td bgcolor="'.$group_bg.'">'.$grouping.' '.$grouping_unit.'</td><td bgcolor="'.$group_bg.'">'.$range.' '.$range_unit.'</td><td><a href="?page=batches_stats&switch='. $row['bid'] .'&act='.$switch_act.'" title="Change accept/reject status"><i class="fa '.$icon.' fa-fw"></i></a></td></tr>';
+			print '<tr><td>'.$row['bid'].'</td><td>'.$lot.'</td><td>'.$caliber_name.'</td><td>'.$bullet_name.'</td><td>'.$powder_name.'</td><td>'.$primer_name.'</td><td>'.$charge.' '.$powder_unit.'</td><td bgcolor="'.$group_bg.'">'.$grouping.' '.$grouping_unit.'</td><td bgcolor="'.$group_bg.'">'.$range.' '.$range_unit.'</td><td><a href="?page=batches_reload&id='. $row['bid'] .'" title="See reloading data"><i class="fa fa-magic fa-fw"></i></a><a href="?page=batches_stats&switch='. $row['bid'] .'&act='.$switch_act.'" title="Change accept/reject status"><i class="fa '.$icon.' fa-fw"></i></a></td></tr>';
 		}
 	}
 	print '</table>';
