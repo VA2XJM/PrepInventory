@@ -86,18 +86,8 @@
 								$location = $row['location'];
 								$qty = $row['qty'];
 								$action = $row['action'];
-								$item_inv_id = $row['item'];
+								$item_id = $row['item'];
 								$log_id = $row['id'];
-
-								# Inventory line
-								$sql2 = "SELECT * FROM `inventory` WHERE `id` = '$item_inv_id'";
-								$result2 = mysqli_query($link, $sql2);
-								if (mysqli_num_rows($result2) < 1) { $item_name = "Unknown Item"; }
-								else {
-									while($row2 = mysqli_fetch_assoc($result2)) {
-										$item_id = $row2['item'];
-									}
-								}
 
 								# Load item name
 								$sql2 = "SELECT * FROM `inv_items` WHERE `id` = '$item_id'";
