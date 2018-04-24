@@ -19,7 +19,7 @@
 			$sql = "DELETE FROM `reloading_data` WHERE `id`='$id'";
 			$result = mysqli_query($link, $sql);
 
-			$sql = "DELETE FROM `reloading_batches` WHERE `caliber`='$id'";
+			$sql = "DELETE FROM `reloading_batches` WHERE `data`='$id'";
 			$xresult = mysqli_query($link, $sql);
 
 			if ($result) {	$notice = '<div class="panel panel-success"><div class="panel-heading">Data deleted.</div></div>'; }
